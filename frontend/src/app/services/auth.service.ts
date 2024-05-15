@@ -1,12 +1,10 @@
 import {Injectable} from '@angular/core';
-import {AuthRequest} from "../dtos/auth-requests";
-import {UserDetail} from "../dtos/auth-requests";
+import {AuthRequest, UserDetail} from '../dtos/auth-request';
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {tap} from 'rxjs/operators';
 import {jwtDecode} from 'jwt-decode';
-import {Globals} from "../globals/globals";
-
+import {Globals} from '../global/globals';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +12,8 @@ import {Globals} from "../globals/globals";
 export class AuthService {
 
   private authBaseUri: string = this.globals.backendUri + '/authentication';
+
+  user: UserDetail;
   private event: boolean = false;
 
   constructor(private httpClient: HttpClient, private globals: Globals) {
@@ -59,16 +59,7 @@ export class AuthService {
    * Check if a valid JWT token is saved in the localStorage
    */
   isLoggedIn() {
-      const token = this.getToken();
-      const expirationDate = this.getTokenExpirationDate(token);
-
-      // Check if token exists and expiration date is not null
-      if (token && expirationDate !== null) {
-          // Check if token is not expired
-          return expirationDate.valueOf() > new Date().valueOf();
-      }
-
-      return false;
+    return !!this.getToken() && (this.getTokenExpirationDate(this.getToken()).valueOf() > new Date().valueOf());
   }
 
   logoutUser() {
@@ -77,7 +68,7 @@ export class AuthService {
   }
 
   getToken() {
-    return  JSON.parse(localStorage.getItem('currentUser') || '{}');
+    return localStorage.getItem('authToken');
   }
 
   /**
@@ -100,7 +91,7 @@ export class AuthService {
     localStorage.setItem('authToken', authResponse);
   }
 
-  private getTokenExpirationDate(token: string): Date | null  {
+  private getTokenExpirationDate(token: string): Date {
 
     const decoded: any = jwtDecode(token);
     if (decoded.exp === undefined) {
@@ -121,7 +112,7 @@ export class AuthService {
     return this.httpClient.get<UserDetail[]>(this.authBaseUri + "/users/" + userId);
   }
 
-  setAdmin(selectedUserId: any): Observable<UserDetail> {
+  setAdmin(selectedUserId): Observable<UserDetail> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

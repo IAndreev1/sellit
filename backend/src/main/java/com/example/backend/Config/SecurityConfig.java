@@ -1,7 +1,7 @@
 package com.example.backend.Config;
 
 
-import com.example.backend.security.JwaAuthorisationFIlter;
+import com.example.backend.security.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +21,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class SecurityConfig {
 
-    private final JwaAuthorisationFIlter.JwtAuthorizationFilter jwtAuthorizationFilter;
+    private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
     @Autowired
-    public SecurityConfig(JwaAuthorisationFIlter.JwtAuthorizationFilter jwtAuthorizationFilter) {
+    public SecurityConfig(JwtAuthorizationFilter jwtAuthorizationFilter) {
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
     }
 

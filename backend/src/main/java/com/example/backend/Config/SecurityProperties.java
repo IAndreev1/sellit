@@ -3,7 +3,7 @@ package com.example.backend.Config;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SecurityProperties {
+public class  SecurityProperties {
 
     private final SecurityPropertiesConfig.Auth auth;
     private final SecurityPropertiesConfig.Jwt jwt;
