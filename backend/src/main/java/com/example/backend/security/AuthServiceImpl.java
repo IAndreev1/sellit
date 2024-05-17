@@ -1,7 +1,7 @@
 package com.example.backend.security;
 
 import com.example.backend.Entity.ApplicationUser;
-import com.example.backend.service.CustomUserDetailService;
+import com.example.backend.service.impl.CustomUserDetailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
