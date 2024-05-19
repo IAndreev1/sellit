@@ -7,13 +7,15 @@ import {ToastrService} from "ngx-toastr";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {ProductService} from "../../services/product.service";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
   imports: [
     FormsModule,
-    NavbarComponent
+    NavbarComponent,
+    NgIf
   ],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.scss'
@@ -27,6 +29,7 @@ export class AddProductComponent {
     imageData:null
   }
   form: NgForm;
+  imagePreview: string | null = null; // Property for image preview
 
   constructor(
     private authService: AuthService,
@@ -61,10 +64,10 @@ export class AddProductComponent {
       const reader = new FileReader();
       reader.onload = () => {
         const base64String = reader.result as string;
-        // Strip off the data URL prefix to get just the base64-encoded string
-        this.product.imageData = base64String.split(',')[1];
+        this.imagePreview = base64String; // Set the image preview
+        this.product.imageData = base64String.split(',')[1]; // Remove the MIME type prefix
       };
-      reader.readAsDataURL(file); // Read file as a data URL
+      reader.readAsDataURL(file);
     }
   }
 }

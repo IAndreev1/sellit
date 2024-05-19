@@ -1,0 +1,44 @@
+.container {
+  margin-top: 2rem;
+}
+
+.card {
+  border-radius: 0.5rem;
+}
+
+.card-header {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.image-placeholder {
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+
+.img-thumbnail {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%; /* Adjust max-width as needed */
+  max-height: 500px; /* Adjust max-height as needed */
+  height: auto;
+}
+
+.form-control-file {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.btn-primary.mt-2 {
+  cursor: pointer;
+}
