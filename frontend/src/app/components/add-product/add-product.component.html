@@ -26,13 +26,13 @@
                 <input type="number" id="productPrice" class="form-control" name="price" [(ngModel)] = 'product.price' ngModel required placeholder="Enter product price">
               </div>
             </div>
-<!--            <div class="form-group">-->
-<!--              <label for="productImage">Image</label>-->
-<!--              <div class="custom-file">-->
-<!--                <input type="file" id="productImage"  [(ngModel)] = 'product.imageData' class="custom-file-input" required>-->
-<!--                <label class="custom-file-label" for="productImage">Choose file</label>-->
-<!--              </div>-->
-<!--            </div>-->
+            <div class="form-group">
+              <label for="image">Image</label>
+              <div>
+                <label for="image">Image:</label>
+                <input type="file" id="image" (change)="onFileSelected($event)">
+              </div>
+            </div>
             <button type="submit" class="btn btn-primary btn-block mt-4" [disabled]="!form.valid">Add Product</button>
           </form>
         </div>

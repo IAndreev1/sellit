@@ -18,6 +18,7 @@ export class ProductService {
     console.log(product.name);
     console.log(product.description);
     console.log(product.price);
+    console.log(product.imageData);
 
     return this.http.post<ProductDto>(this.baseUri, product);
   }

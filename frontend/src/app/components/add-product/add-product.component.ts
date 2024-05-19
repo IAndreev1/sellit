@@ -53,4 +53,18 @@ export class AddProductComponent {
       }
     });
   }
+
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64String = reader.result as string;
+        // Strip off the data URL prefix to get just the base64-encoded string
+        this.product.imageData = base64String.split(',')[1];
+      };
+      reader.readAsDataURL(file); // Read file as a data URL
+    }
+  }
 }
