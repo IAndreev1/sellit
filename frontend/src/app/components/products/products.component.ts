@@ -1,11 +1,13 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RouterLink} from "@angular/router";
-import {ProductDto} from "../../dtos/productDto";
+import {ProductDto, ProductSearchDto} from "../../dtos/productDto";
 import {iterator} from "rxjs/internal/symbol/iterator";
 import {ProductCardComponent} from "./product-card/product-card.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {NavbarComponent} from "../navbar/navbar.component";
+import {ToastrService} from "ngx-toastr";
+import {AllProductsService} from "../../services/all-products.service";
 
 @Component({
   selector: 'app-products',
@@ -21,18 +23,35 @@ import {NavbarComponent} from "../navbar/navbar.component";
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit {
   products: ProductDto[] = [];
-  searchParameters: ProductDto = {
-    id: null,
+  searchParameters: ProductSearchDto = {
     name: '',
     description: '',
-    price: 0,
-    imageData: null
+    priceFrom: 0,
+    priceTo: 0,
   };
-  protected readonly iterator = iterator;
 
-  loadStorage() {
 
+  constructor(private service: AllProductsService,
+              private notification: ToastrService) {
+  }
+
+  ngOnInit(): void {
+    console.log("init")
+    this.loadStorage();
+  }
+
+
+  public loadStorage() {
+    this.service.getItems(this.searchParameters).subscribe({
+        next: res => {
+          this.products = res;
+        },
+        error: error => {
+
+        }
+      }
+    )
   }
 }
