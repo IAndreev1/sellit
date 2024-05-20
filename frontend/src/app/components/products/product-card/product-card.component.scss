@@ -1,0 +1,44 @@
+.card {
+  border: 1px solid #e0e0e0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.25rem;
+}
+
+.card-text {
+  margin-bottom: 0.5rem;
+}
+
+.text-primary {
+  color: #007bff !important;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.text-success {
+  color: #28a745 !important;
+}
+
+.card-img-top {
+  height: 200px; /* Fixed height for the image container */
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fixed-image {
+  max-height: 100%; /* Ensure the image fits within the container without overflowing */
+  max-width: 100%;  /* Maintain aspect ratio */
+  object-fit: cover; /* Ensure the image covers the entire container area */
+}

@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {ProductService} from "../../services/product.service";
 import {NgIf} from "@angular/common";
+import {ImageCropperComponent} from "ngx-image-cropper";
 
 @Component({
   selector: 'app-add-product',
@@ -15,7 +16,8 @@ import {NgIf} from "@angular/common";
   imports: [
     FormsModule,
     NavbarComponent,
-    NgIf
+    NgIf,
+    ImageCropperComponent
   ],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.scss'
@@ -70,4 +72,5 @@ export class AddProductComponent {
       reader.readAsDataURL(file);
     }
   }
+
 }
