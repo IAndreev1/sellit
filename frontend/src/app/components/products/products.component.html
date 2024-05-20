@@ -1,1 +1,49 @@
-<p>products works!</p>
+<app-navbar></app-navbar>
+<h1 class="display-4">Products</h1>
+<div class="custom-header-border"></div>
+<form class="d-flex flex-row align-items-end w-auto mb-3">
+  <!-- Hidden submit button -->
+  <button type="submit" hidden="hidden"></button>
+  <div class="flex-grow-1">
+    <label for="searchTitle" class="col-form-label">Title</label>
+    <input type="text" id="searchTitle" name="searchTitle" class="form-control" [(ngModel)]="searchParameters.name" (ngModelChange)="loadStorage()">
+  </div>
+  <div class="ml-3">
+    <label for="priceFrom" class="col-form-label">Price From</label>
+    <input type="number" id="priceFrom" name="priceFrom" class="form-control" [(ngModel)]="searchParameters.price" (ngModelChange)="loadStorage()">
+  </div>
+  <div class="ml-3">
+    <label for="priceTo" class="col-form-label">Price To</label>
+    <input type="number" id="priceTo" name="priceTo" class="form-control" [(ngModel)]="searchParameters.price" (ngModelChange)="loadStorage()">
+  </div>
+</form>
+
+<div class="text-end">
+  <button type="button"
+          class="btn btn-primary"
+          [routerLink]="['/item/create']">
+    <i class="bi bi-plus-lg"></i>
+    Add Item
+  </button>
+</div>
+
+<div *ngIf="products.length > 0">
+  <div class="row">
+    <div class="col col-7 col-sm-8 col-md-10">
+      <h1 class="display-5">In Stock Items</h1>
+    </div>
+  </div>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5">
+    <div class="mb-3" *ngFor="let product of products">
+      <a style="text-decoration: none"
+         aria-label="Show item details">
+        <app-product-card [name]="product.name" [description]="product.description" [price]="product.price"
+                          [imageDate]="product.imageData"
+        ></app-product-card>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+
