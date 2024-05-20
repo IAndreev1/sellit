@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * Service interface for managing user operations.
  */
 public interface UserService extends UserDetailsService {
+    ApplicationUser getUser(String authToken);
+
     /**
      * Find an application user based on the email address.
      *

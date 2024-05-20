@@ -22,9 +22,10 @@ export class AllProductsService {
       params = params.append('description', searchParameters.description);
     }
 
-    // const headers = new HttpHeaders({
-    //   'Authorization': this.authService.getToken()
-    // });
-    return this.http.get<ProductDto[]>(this.baseUri, {params});
+    const headers = new HttpHeaders({
+      'Authorization': this.authService.getToken()
+    });
+    console.log(headers)
+    return this.http.get<ProductDto[]>(this.baseUri, {params,headers});
   }
 }

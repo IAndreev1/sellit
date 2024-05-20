@@ -4,6 +4,7 @@ import com.example.backend.Endpoints.dto.UserDetailDto;
 import com.example.backend.Endpoints.dto.UserLoginDto;
 import com.example.backend.Entity.ApplicationUser;
 import com.example.backend.Exceptions.ConflictException;
+import com.example.backend.Exceptions.NotFoundException;
 import com.example.backend.Exceptions.ValidationException;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.security.JwtTokenizer;
@@ -37,11 +38,24 @@ public class CustomUserDetailService implements UserService {
         this.jwtTokenizer = jwtTokenizer;
     }
 
+
     @Override
-    public ApplicationUser findApplicationUserByEmail(String email) {
-        return null;
+    public ApplicationUser getUser(String authToken) {
+        LOGGER.trace("getUser({})", authToken);
+        String email = jwtTokenizer.getEmailFromToken(authToken);
+        return userRepository.findUserByEmail(email);
     }
 
+    @Override
+    public ApplicationUser findApplicationUserByEmail(String email) {
+        LOGGER.debug("Find application user by email");
+        LOGGER.trace("findApplicationUserByEmail({})", email);
+        ApplicationUser applicationUser = userRepository.findUserByEmail(email);
+        if (applicationUser != null) {
+            return applicationUser;
+        }
+        throw new NotFoundException(String.format("Could not find the user with the email address %s", email));
+    }
     @Override
     public String login(UserLoginDto userLoginDto) throws ValidationException, ConflictException {
         LOGGER.trace("login({})", userLoginDto);
@@ -97,11 +111,6 @@ public class CustomUserDetailService implements UserService {
         } else {
             grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
         }
-
-
-
-
-
 
         User toRet = new User(applicationUser.getEmail(), applicationUser.getPassword(), grantedAuthorities);
 

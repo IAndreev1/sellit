@@ -49,7 +49,7 @@ public class ProductEndpoint {
     @GetMapping
     List<ProductDto> searchProducts(ProductSearchDto searchParam){
         LOGGER.trace("searchProducts({})", searchParam);
-        ApplicationUser user = authService.getUserFromToken();
+
         return service.searchProducts(searchParam);
     }
 }

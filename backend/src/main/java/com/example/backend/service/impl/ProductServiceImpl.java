@@ -3,8 +3,10 @@ package com.example.backend.service.impl;
 import com.example.backend.Endpoints.Mappers.ProductMapper;
 import com.example.backend.Endpoints.dto.ProductDto;
 import com.example.backend.Endpoints.dto.ProductSearchDto;
+import com.example.backend.Entity.ApplicationUser;
 import com.example.backend.Entity.Product;
 import com.example.backend.repository.ProductRepository;
+import com.example.backend.security.AuthService;
 import com.example.backend.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +25,12 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductMapper productMapper;
 
-    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper) {
+    private final AuthService authService;
+
+    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper, AuthService authService) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
+        this.authService = authService;
     }
 
     @Override
@@ -49,6 +54,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> searchProducts(ProductSearchDto searchParam) {
+
+        ApplicationUser user = authService.getUserFromToken();
+        System.out.println(user.getEmail());
+
         return productRepository.searchProducts(searchParam.name(), searchParam.description(), searchParam.priceFrom(), searchParam.priceTo())
                 .stream()
                 .map(productMapper::entityToProductDto)
