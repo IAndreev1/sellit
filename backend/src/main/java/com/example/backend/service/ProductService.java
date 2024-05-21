@@ -3,6 +3,7 @@ package com.example.backend.service;
 import com.example.backend.Endpoints.dto.ProductDto;
 import com.example.backend.Endpoints.dto.ProductSearchDto;
 import com.example.backend.Entity.Product;
+import com.example.backend.Exceptions.AuthorizationException;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public interface ProductService {
      *
      * @param id The ID of the product to be deleted.
      */
-    void delete(Long id);
+    void delete(Long id) throws AuthorizationException;
 
     /**
      * Searches for products based on the criteria specified in the product search DTO.

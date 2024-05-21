@@ -5,14 +5,18 @@ import com.example.backend.Endpoints.dto.ProductDto;
 import com.example.backend.Endpoints.dto.ProductSearchDto;
 import com.example.backend.Entity.ApplicationUser;
 import com.example.backend.Entity.Product;
+import com.example.backend.Exceptions.AuthorizationException;
 import com.example.backend.security.AuthService;
 import com.example.backend.service.ProductService;
 import jakarta.annotation.security.PermitAll;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +45,7 @@ public class ProductEndpoint {
 
     @PermitAll
     @PostMapping
-    ProductDto create(@RequestBody ProductDto productDto){
+    public ProductDto create(@RequestBody ProductDto productDto){
         LOGGER.trace("create({})", productDto);
         Product createdProduct = service.create(productDto);
         return productMapper.entityToProductDto(createdProduct);
@@ -49,15 +53,21 @@ public class ProductEndpoint {
 
     @PermitAll
     @GetMapping
-    List<ProductDto> searchProducts(ProductSearchDto searchParam){
+    public List<ProductDto> searchProducts(ProductSearchDto searchParam){
         LOGGER.trace("searchProducts({})", searchParam);
 
         return service.searchProducts(searchParam);
     }
     @Secured("ROLE_USER")
     @GetMapping("/forUser")
-    List<ProductDto> getUserProducts(){
+    public List<ProductDto> getUserProducts(){
         return service.getUserProducts();
     }
+    @Secured("ROLE_USER")
+    @DeleteMapping("{id}")
+    public void deleteProduct(@PathVariable Long id) throws AuthorizationException {
+        service.delete(id);
+    }
+
 
 }

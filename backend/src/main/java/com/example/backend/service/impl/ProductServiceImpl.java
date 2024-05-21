@@ -5,6 +5,8 @@ import com.example.backend.Endpoints.dto.ProductDto;
 import com.example.backend.Endpoints.dto.ProductSearchDto;
 import com.example.backend.Entity.ApplicationUser;
 import com.example.backend.Entity.Product;
+import com.example.backend.Exceptions.AuthorizationException;
+import com.example.backend.Exceptions.NotFoundException;
 import com.example.backend.repository.ProductRepository;
 import com.example.backend.security.AuthService;
 import com.example.backend.service.ProductService;
@@ -51,8 +53,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws AuthorizationException {
+        Product toDel = productRepository.getProductsById(id);
 
+        if (toDel != null) {
+            ApplicationUser user = authService.getUserFromToken();
+            if (user.getId().equals(toDel.getUser().getId())) {
+                productRepository.delete(toDel);
+            } else {
+                throw new AuthorizationException("User does not have access to delete this product", new ArrayList<>());
+            }
+        } else {
+            throw new NotFoundException("Product not found with id: " + id);
+        }
     }
 
     @Override
