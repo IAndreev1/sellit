@@ -39,12 +39,11 @@
         <h3>My Products</h3>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
           <ng-container *ngFor="let product of products">
-            <div class="col">
+            <div class="col" (click)="redirectToProduct(product.id)">
               <app-product-card [name]="product.name" [description]="product.description" [price]="product.price" [imageData]="product.imageData"></app-product-card>
             </div>
           </ng-container>
         </div>
       </div>
-    </div>
   </div>
 </div>

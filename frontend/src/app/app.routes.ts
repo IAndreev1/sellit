@@ -18,7 +18,7 @@ export const routes: Routes = [
   { path: 'products', component: ProductsComponent },
   { path: 'account', component: AccountComponent },
   { path: 'product', component: SingleProductViewComponent },
-  { path: 'myProduct', component: SingleProductEditDeleteViewComponent },
+  { path: ':id/myProduct', component: SingleProductEditDeleteViewComponent },
 
 
 ];

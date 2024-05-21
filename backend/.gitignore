@@ -52,3 +52,12 @@ spring-boot-starter-parent/
 # OS-specific files
 .DS_Store
 Thumbs.db
+
+# Ignore database files
+*.db
+*.sqlite
+*.sqlitedb
+*.sqlite3
+*.mdf
+*.ldf
+*.sdf

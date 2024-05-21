@@ -69,5 +69,11 @@ public class ProductEndpoint {
         service.delete(id);
     }
 
+    @Secured("ROLE_USER")
+    @GetMapping("myProd/{id}")
+    public ProductDto getById(@PathVariable Long id) {
+        return productMapper.entityToProductDto(service.getById(id));
+    }
+
 
 }

@@ -5,6 +5,7 @@ import {NavbarComponent} from "../navbar/navbar.component";
 import {ProductCardComponent} from "../products/product-card/product-card.component";
 import {AllProductsService} from "../../services/all-products.service";
 import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-account',
@@ -19,7 +20,7 @@ import {ToastrService} from "ngx-toastr";
   templateUrl: './account.component.html',
   styleUrl: './account.component.scss'
 })
-export class AccountComponent implements OnInit{
+export class AccountComponent implements OnInit {
   activeSection: string = 'changeName';
   newName: string = '';
   currentPassword: string = '';
@@ -28,13 +29,13 @@ export class AccountComponent implements OnInit{
 
 
   constructor(private service: AllProductsService,
-              private notification: ToastrService) {
+              private notification: ToastrService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
-        this.loadProducts();
-    }
-
+    this.loadProducts();
+  }
 
 
   toggleSection(section: string) {
@@ -65,5 +66,9 @@ export class AccountComponent implements OnInit{
   deleteProduct(productId: number) {
     this.products = this.products.filter(product => product.id !== productId);
     console.log('Product deleted:', productId);
+  }
+
+  redirectToProduct(productId: string) {
+    this.router.navigate(['/' + productId + '/myProduct']);
   }
 }

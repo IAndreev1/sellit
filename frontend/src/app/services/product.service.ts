@@ -26,6 +26,13 @@ export class ProductService {
     return this.http.post<ProductDto>(this.baseUri, product,{headers});
   }
 
+  getById(id: string): Observable<ProductDto> {
+    const headers = new HttpHeaders({
+      'Authorization': this.authService.getToken()
+    });
+    return this.http.get<ProductDto>(`${this.baseUri}/myProd/${id}`,{headers});
+  }
+
 
 
 }

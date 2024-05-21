@@ -1,14 +1,15 @@
 <!-- single-product-view.html -->
-
+<app-navbar></app-navbar>
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-6">
-      <img src="../../../../assets/image_placeholder.jpg" alt="Product Image" class="img-fluid rounded product-image">
+      <img *ngIf="decodedImage" [src]="decodedImage" alt="Product Image" class="img-fluid rounded fixed-image">
+      <img *ngIf="!decodedImage" src="../../../../assets/image_placeholder.jpg" class="img-fluid rounded fixed-image">
     </div>
     <div class="col-md-6">
-      <h1 class="display-4 product-name">Product Name</h1>
-      <p class="lead product-description">Product Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dapibus risus at nunc convallis, non vestibulum metus bibendum. Sed vitae tempor nulla.</p>
-      <p class="font-weight-bold product-price">Price: $99.99</p>
+      <h1 class="display-4 product-name">{{product.name}}</h1>
+      <p class="lead product-description">{{product.description}}</p>
+      <p class="font-weight-bold product-price">Price: ${{product.price}}</p>
       <!-- Edit and Delete buttons for the user -->
       <button class="btn btn-primary btn-edit-product">Edit Product</button>
       <button class="btn btn-danger btn-delete-product">Delete Product</button>

@@ -46,4 +46,6 @@ public interface ProductService {
      * @return A list of product DTOs belonging to the current user.
      */
     List<ProductDto> getUserProducts();
+
+    Product getById(Long id);
 }
