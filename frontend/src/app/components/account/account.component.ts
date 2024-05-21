@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {NavbarComponent} from "../navbar/navbar.component";
 import {ProductCardComponent} from "../products/product-card/product-card.component";
+import {AllProductsService} from "../../services/all-products.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-account',
@@ -17,33 +19,50 @@ import {ProductCardComponent} from "../products/product-card/product-card.compon
   templateUrl: './account.component.html',
   styleUrl: './account.component.scss'
 })
-export class AccountComponent {
+export class AccountComponent implements OnInit{
   activeSection: string = 'changeName';
   newName: string = '';
   currentPassword: string = '';
   newPassword: string = '';
-  products = [
-    { id: 1, name: 'Product 1', price: 100 },
-    { id: 2, name: 'Product 2', price: 200 },
-    { id: 3, name: 'Product 3', price: 300 }
-  ];
+  products = [];
+
+
+  constructor(private service: AllProductsService,
+              private notification: ToastrService) {
+  }
+
+  ngOnInit(): void {
+        this.loadProducts();
+    }
+
+
 
   toggleSection(section: string) {
     this.activeSection = section;
   }
 
   changeName() {
-    // Implement change name logic here
     console.log('Name changed to:', this.newName);
   }
 
   changePassword() {
-    // Implement change password logic here
     console.log('Password changed to:', this.newPassword);
   }
 
+  loadProducts() {
+    this.service.getUserProducts().subscribe({
+        next: res => {
+          this.products = res;
+        },
+        error: error => {
+
+        }
+      }
+    )
+  }
+
+
   deleteProduct(productId: number) {
-    // Implement delete product logic here
     this.products = this.products.filter(product => product.id !== productId);
     console.log('Product deleted:', productId);
   }

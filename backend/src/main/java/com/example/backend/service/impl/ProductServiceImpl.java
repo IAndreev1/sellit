@@ -36,8 +36,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product create(ProductDto productDto) {
         LOGGER.trace("create({})", productDto);
+        ApplicationUser user = authService.getUserFromToken();
+
 
         Product product = productMapper.dtoToEntity(productDto);
+        product.setUser(user);
 
         return productRepository.save(product);
     }
