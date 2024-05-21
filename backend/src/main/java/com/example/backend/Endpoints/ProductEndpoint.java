@@ -8,8 +8,10 @@ import com.example.backend.Entity.Product;
 import com.example.backend.security.AuthService;
 import com.example.backend.service.ProductService;
 import jakarta.annotation.security.PermitAll;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,4 +54,10 @@ public class ProductEndpoint {
 
         return service.searchProducts(searchParam);
     }
+    @Secured("ROLE_USER")
+    @GetMapping("/forUser")
+    List<ProductDto> getUserProducts(){
+        return service.getUserProducts();
+    }
+
 }

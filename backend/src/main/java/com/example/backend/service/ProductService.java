@@ -8,11 +8,41 @@ import java.util.List;
 
 public interface ProductService {
 
+    /**
+     * Creates a new product based on the provided product DTO.
+     *
+     * @param productDto The product DTO containing information about the product to be created.
+     * @return The created product.
+     */
     Product create(ProductDto productDto);
 
+    /**
+     * Updates an existing product based on the provided product DTO.
+     *
+     * @param productDto The product DTO containing updated information about the product.
+     * @return The updated product.
+     */
     Product update(ProductDto productDto);
 
+    /**
+     * Deletes a product with the specified ID.
+     *
+     * @param id The ID of the product to be deleted.
+     */
     void delete(Long id);
 
+    /**
+     * Searches for products based on the criteria specified in the product search DTO.
+     *
+     * @param productSearchDto The product search DTO containing search criteria.
+     * @return A list of product DTOs matching the search criteria.
+     */
     List<ProductDto> searchProducts(ProductSearchDto productSearchDto);
+
+    /**
+     * Retrieves products associated with the current user.
+     *
+     * @return A list of product DTOs belonging to the current user.
+     */
+    List<ProductDto> getUserProducts();
 }

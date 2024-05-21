@@ -4,7 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 
 
 @Entity
@@ -20,9 +22,12 @@ public class Product {
     private String description;
 
     private Double price;
-
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private ApplicationUser user;
     @Lob
     private byte[] imageData;
+
 
 
     public Long getId() {
@@ -45,6 +50,10 @@ public class Product {
         return price;
     }
 
+    public ApplicationUser getUser() {
+        return user;
+    }
+
     public void setImageData(byte[] imageData) {
         this.imageData = imageData;
     }
@@ -63,5 +72,9 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setUser(ApplicationUser user) {
+        this.user = user;
     }
 }

@@ -55,8 +55,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> searchProducts(ProductSearchDto searchParam) {
 
-        ApplicationUser user = authService.getUserFromToken();
-        System.out.println(user.getEmail());
 
         return productRepository.searchProducts(searchParam.name(), searchParam.description(), searchParam.priceFrom(), searchParam.priceTo())
                 .stream()
@@ -64,6 +62,16 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    @Override
+    public List<ProductDto> getUserProducts() {
+
+        ApplicationUser user = authService.getUserFromToken();
+        return productRepository.getProductsByUserId(user.getId())
+                .stream()
+                .map(productMapper::entityToProductDto)
+                .collect(Collectors.toCollection(ArrayList::new));
+
+    }
 
 
 }

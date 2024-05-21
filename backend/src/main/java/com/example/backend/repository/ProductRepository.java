@@ -21,4 +21,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                                  @Param("priceFrom") Double priceFrom,
                                  @Param("priceTo") Double priceTo);
 
+
+    List<Product> getProductsByUserId(Long id);
 }
