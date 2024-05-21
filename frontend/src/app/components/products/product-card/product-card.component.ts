@@ -27,7 +27,6 @@ export class ProductCardComponent implements OnInit {
 
   decodeImage(): void {
     if (this.imageData != null) {
-      // Ensure the base64 string starts with 'data:image/jpeg;base64,' or another valid image type
       if (!this.imageData.startsWith('data:image')) {
         this.imageData = 'data:image/jpeg;base64,' + this.imageData;
       }

@@ -5,6 +5,10 @@ import {HomeComponent} from "./components/home/home.component";
 import {AddProductComponent} from "./components/add-product/add-product.component";
 import {ProductsComponent} from "./components/products/products.component";
 import {AccountComponent} from "./components/account/account.component";
+import {SingleProductViewComponent} from "./components/single-product-view/single-product-view.component";
+import {
+  SingleProductEditDeleteViewComponent
+} from "./components/single-product-edit-delete-view/single-product-edit-delete-view.component";
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,5 +17,8 @@ export const routes: Routes = [
   { path: 'addNewProduct', component: AddProductComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'account', component: AccountComponent },
+  { path: 'product', component: SingleProductViewComponent },
+  { path: 'myProduct', component: SingleProductEditDeleteViewComponent },
+
 
 ];
