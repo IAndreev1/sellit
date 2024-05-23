@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {HomeComponent} from "./components/home/home.component";
@@ -9,16 +9,23 @@ import {SingleProductViewComponent} from "./components/single-product-view/singl
 import {
   SingleProductEditDeleteViewComponent
 } from "./components/single-product-edit-delete-view/single-product-edit-delete-view.component";
+import {EditProductComponent} from "./components/single-product-edit-delete-view/edit-product/edit-product.component";
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'addNewProduct', component: AddProductComponent },
-  { path: 'products', component: ProductsComponent },
-  { path: 'account', component: AccountComponent },
-  { path: 'product', component: SingleProductViewComponent },
-  { path: ':id/myProduct', component: SingleProductEditDeleteViewComponent },
+  {path: '', component: HomeComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
+  {path: 'addNewProduct', component: AddProductComponent},
+  {path: 'products', component: ProductsComponent},
+  {path: 'product', component: SingleProductViewComponent},
+  {path: 'account', component: AccountComponent},
+  {
+    path: ':id/myProduct',
+    children: [
+      {path: '', component: SingleProductEditDeleteViewComponent},
+      {path: 'edit', component: EditProductComponent}
+    ]
+  }
 
 
 ];

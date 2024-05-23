@@ -11,7 +11,7 @@
       <p class="lead product-description">{{product.description}}</p>
       <p class="font-weight-bold product-price">Price: ${{product.price}}</p>
       <!-- Edit and Delete buttons for the user -->
-      <button class="btn btn-primary btn-edit-product">Edit Product</button>
+      <button class="btn btn-primary btn-edit-product" [routerLink]="'edit'" >Edit Product</button>
       <button class="btn btn-danger btn-delete-product">Delete Product</button>
     </div>
   </div>

@@ -23,7 +23,7 @@ public interface ProductService {
      * @param productDto The product DTO containing updated information about the product.
      * @return The updated product.
      */
-    Product update(ProductDto productDto);
+    Product update(ProductDto productDto) throws AuthorizationException;
 
     /**
      * Deletes a product with the specified ID.

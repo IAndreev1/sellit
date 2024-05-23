@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductService} from "../../services/product.service";
 import {ToastrService} from "ngx-toastr";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {ProductDto} from "../../dtos/productDto";
 import {NavbarComponent} from "../navbar/navbar.component";
 import {NgIf} from "@angular/common";
@@ -11,7 +11,8 @@ import {NgIf} from "@angular/common";
   standalone: true,
   imports: [
     NavbarComponent,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './single-product-edit-delete-view.component.html',
   styleUrl: './single-product-edit-delete-view.component.scss'
@@ -35,7 +36,9 @@ export class SingleProductEditDeleteViewComponent implements OnInit {
         const prodId = params.id;
         this.service.getById(prodId).subscribe({
           next: res => {
+
             this.product = res;
+            console.log(this.product.name)
             this.decodeImage();
           },
           error: error => {

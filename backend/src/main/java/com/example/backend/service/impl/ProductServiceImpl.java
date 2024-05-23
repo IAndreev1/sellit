@@ -10,6 +10,7 @@ import com.example.backend.Exceptions.NotFoundException;
 import com.example.backend.repository.ProductRepository;
 import com.example.backend.security.AuthService;
 import com.example.backend.service.ProductService;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -48,8 +49,24 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product update(ProductDto productDto) {
-        return null;
+    public Product update(ProductDto productDto) throws AuthorizationException {
+        Product existingProduct = productRepository.getProductsById(productDto.id());
+
+        if (existingProduct != null) {
+            ApplicationUser user = authService.getUserFromToken();
+            if (user.getId().equals(existingProduct.getUser().getId())) {
+                existingProduct.setName(productDto.name());
+                existingProduct.setDescription(productDto.description());
+                existingProduct.setPrice(productDto.price());
+                existingProduct.setImageData(productDto.imageData());
+                return productRepository.save(existingProduct);
+            } else {
+                throw new AuthorizationException("User does not have access to update this product", new ArrayList<>());
+            }
+        } else {
+            throw new NotFoundException("Product with id: " + productDto.id() + " not found");
+        }
+
     }
 
     @Override

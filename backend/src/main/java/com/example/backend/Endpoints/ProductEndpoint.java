@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,24 +46,33 @@ public class ProductEndpoint {
 
     @PermitAll
     @PostMapping
-    public ProductDto create(@RequestBody ProductDto productDto){
+    public ProductDto create(@RequestBody ProductDto productDto) {
         LOGGER.trace("create({})", productDto);
         Product createdProduct = service.create(productDto);
         return productMapper.entityToProductDto(createdProduct);
     }
 
+
     @PermitAll
     @GetMapping
-    public List<ProductDto> searchProducts(ProductSearchDto searchParam){
+    public List<ProductDto> searchProducts(ProductSearchDto searchParam) {
         LOGGER.trace("searchProducts({})", searchParam);
 
         return service.searchProducts(searchParam);
     }
+
+    @Secured("ROLE_USER")
+    @PutMapping()
+    public ProductDto updateProduct(@RequestBody ProductDto productDto) throws AuthorizationException {
+        return productMapper.entityToProductDto(service.update(productDto));
+    }
+
     @Secured("ROLE_USER")
     @GetMapping("/forUser")
-    public List<ProductDto> getUserProducts(){
+    public List<ProductDto> getUserProducts() {
         return service.getUserProducts();
     }
+
     @Secured("ROLE_USER")
     @DeleteMapping("{id}")
     public void deleteProduct(@PathVariable Long id) throws AuthorizationException {

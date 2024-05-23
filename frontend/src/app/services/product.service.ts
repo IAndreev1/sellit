@@ -33,6 +33,13 @@ export class ProductService {
     return this.http.get<ProductDto>(`${this.baseUri}/myProd/${id}`,{headers});
   }
 
+  update(product:ProductDto): Observable<ProductDto> {
+    const headers = new HttpHeaders({
+      'Authorization': this.authService.getToken()
+    });
+
+    return this.http.put<ProductDto>(`${this.baseUri}`,product,{headers});
+  }
 
 
 }
