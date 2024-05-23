@@ -60,7 +60,7 @@ export class EditProductComponent implements OnInit {
 
   onSubmit(form: NgForm): void {
     this.productService.update(this.product).subscribe(() => {
-      this.router.navigate(['/products']);
+      this.router.navigate(['/account']);
     });
   }
 
