@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {ProductDto, ProductSearchDto} from "../../dtos/productDto";
 import {iterator} from "rxjs/internal/symbol/iterator";
 import {ProductCardComponent} from "./product-card/product-card.component";
@@ -34,7 +34,8 @@ export class ProductsComponent implements OnInit {
 
 
   constructor(private service: AllProductsService,
-              private notification: ToastrService) {
+              private notification: ToastrService,
+              private router: Router,) {
   }
 
   ngOnInit(): void {
@@ -53,5 +54,8 @@ export class ProductsComponent implements OnInit {
         }
       }
     )
+  }
+  redirectToProduct(productId: string) {
+    this.router.navigate(['/' + productId + '/product']);
   }
 }

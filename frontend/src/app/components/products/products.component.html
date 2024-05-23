@@ -9,15 +9,18 @@
     <button type="submit" hidden></button>
     <div class="col-md-4">
       <label for="searchTitle" class="form-label">Title</label>
-      <input type="text" id="searchTitle" name="searchTitle" class="form-control" [(ngModel)]="searchParameters.name" (ngModelChange)="loadStorage()">
+      <input type="text" id="searchTitle" name="searchTitle" class="form-control" [(ngModel)]="searchParameters.name"
+             (ngModelChange)="loadStorage()">
     </div>
     <div class="col-md-2">
       <label for="priceFrom" class="form-label">Price From</label>
-      <input type="number" id="priceFrom" name="priceFrom" class="form-control" [(ngModel)]="searchParameters.priceFrom" (ngModelChange)="loadStorage()">
+      <input type="number" id="priceFrom" name="priceFrom" class="form-control" [(ngModel)]="searchParameters.priceFrom"
+             (ngModelChange)="loadStorage()">
     </div>
     <div class="col-md-2">
       <label for="priceTo" class="form-label">Price To</label>
-      <input type="number" id="priceTo" name="priceTo" class="form-control" [(ngModel)]="searchParameters.priceTo" (ngModelChange)="loadStorage()">
+      <input type="number" id="priceTo" name="priceTo" class="form-control" [(ngModel)]="searchParameters.priceTo"
+             (ngModelChange)="loadStorage()">
     </div>
   </form>
 
@@ -32,8 +35,10 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
       <ng-container *ngFor="let product of products">
         <div class="col">
-          <a href="#" class="text-decoration-none" aria-label="Show item details">
-            <app-product-card [name]="product.name" [description]="product.description" [price]="product.price" [imageData]="product.imageData"></app-product-card>
+          <a (click)="redirectToProduct(product.id.toString())" class="text-decoration-none"
+             aria-label="Show item details">
+            <app-product-card [name]="product.name" [description]="product.description" [price]="product.price"
+                              [imageData]="product.imageData"></app-product-card>
           </a>
         </div>
       </ng-container>
