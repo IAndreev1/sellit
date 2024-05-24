@@ -3,3 +3,20 @@
   color: #007bff; /* Change color to a cool blue */
   font-weight: bold; /* Make it bold */
 }
+
+.bet-form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.bet-label {
+  font-weight: bold;
+}
+
+.bet-amount, .bet-description {
+  resize: none; /* Prevent resizing of the textarea */
+}
+
+.btn-lg {
+  margin: 10px /* Adjust button padding */
+}

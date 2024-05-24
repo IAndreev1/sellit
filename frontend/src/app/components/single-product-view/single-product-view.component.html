@@ -2,30 +2,54 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-6">
-      <img *ngIf="decodedImage" [src]="decodedImage" alt="Product" class="img-fluid rounded fixed-image">
-      <img *ngIf="!decodedImage" src="../../../../assets/image_placeholder.jpg" class="img-fluid rounded fixed-image" alt="Product">
+      <img *ngIf="decodedImage" [src]="decodedImage" alt="Product" class="img-fluid rounded fixed-image"
+           style="max-width: 100%; max-height: 400px;">
+      <img *ngIf="!decodedImage" src="../../../../assets/image_placeholder.jpg" class="img-fluid rounded fixed-image"
+           alt="Product" style="max-width: 100%; max-height: 400px;">
     </div>
     <div class="col-md-6">
       <h1 class="display-4 product-name">{{product.name}}</h1>
       <p class="lead product-description">{{product.description}}</p>
-      <p class="font-weight-bold product-price mb-4"> Starting Price: <span class="starting-price">{{product.price}}$</span></p>
+      <p class="font-weight-bold product-price mb-4"> Starting Price: <span class="starting-price">{{product.price}}
+        $</span></p>
     </div>
   </div>
 
   <div class="row mt-5">
     <div class="col-md-12">
       <h2 class="text-center mb-4 bet-header">Place a Bet</h2>
-      <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="betAmount" class="bet-label">Bet Amount:</label>
-          <input type="number" class="form-control bet-amount" id="betAmount" placeholder="Enter bet amount" name="amount" [(ngModel)]="bet.amount">
+      <ng-container *ngIf="userHasBet; else betForm">
+        <div class="alert alert-info text-center" role="alert">
+          <i class="fas fa-check-circle"></i> You have already placed a bet for this product.
+          <br>
+          <button class="btn btn-outline-info mt-3">See Your Bet</button>
         </div>
-        <div class="form-group">
-          <label for="betDescription" class="bet-label">Bet Description:</label>
-          <textarea class="form-control bet-description" id="betDescription" rows="3" placeholder="Enter bet description" name="description" [(ngModel)]="bet.description"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block btn-place-bet">Place Bet</button>
-      </form>
+      </ng-container>
+
+      <ng-template #betForm>
+        <form (ngSubmit)="onSubmit()" class="bet-form">
+          <div class="form-group">
+            <label for="betAmount" class="bet-label">Bet Amount:</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input type="number" class="form-control bet-amount" id="betAmount" placeholder="Enter bet amount"
+                     name="amount" [(ngModel)]="bet.amount">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="betDescription" class="bet-label">Bet Description:</label>
+            <textarea class="form-control bet-description" id="betDescription" rows="3"
+                      placeholder="Enter bet description" name="description" [(ngModel)]="bet.description"></textarea>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg btn-block btn-glow">Place Bet</button>
+          </div>
+        </form>
+      </ng-template>
+
+
     </div>
   </div>
 </div>

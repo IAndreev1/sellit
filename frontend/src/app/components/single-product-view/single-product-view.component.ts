@@ -31,6 +31,8 @@ export class SingleProductViewComponent implements OnInit {
     user:null,
     product:null
   };
+  userHasBet:boolean = false;
+
   constructor(
     private service: ProductService,
     private betService:BetService,
