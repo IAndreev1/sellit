@@ -7,6 +7,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
 
 
 @Entity
@@ -14,7 +17,6 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
 
     private String name;
@@ -27,6 +29,8 @@ public class Product {
     private ApplicationUser user;
     @Lob
     private byte[] imageData;
+    @OneToMany
+    private List<Bet> bets;
 
 
 

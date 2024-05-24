@@ -40,6 +40,8 @@ public class ApplicationUser implements UserDetails {
     private Boolean admin;
     @OneToMany
     private List<Product> userProducts;
+    @OneToMany
+    private List<Bet> bets;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

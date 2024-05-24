@@ -6,7 +6,9 @@ import com.example.backend.Entity.Product;
 import com.example.backend.Exceptions.AuthorizationException;
 
 import java.util.List;
-
+/**
+ * Service interface for managing product operations.
+ */
 public interface ProductService {
 
     /**
