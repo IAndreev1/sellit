@@ -18,7 +18,7 @@ public class Bet {
     private Double amount;
     @ManyToOne
     private ApplicationUser user;
-    @OneToOne
+    @ManyToOne
     private Product product;
 
     public void setUser(ApplicationUser user) {

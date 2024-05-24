@@ -16,10 +16,6 @@ export class ProductService {
   }
 
   createProduct(product: ProductDto): Observable<ProductDto> {
-    console.log(product.name);
-    console.log(product.description);
-    console.log(product.price);
-    console.log(product.imageData);
     const headers = new HttpHeaders({
       'Authorization': this.authService.getToken()
     });

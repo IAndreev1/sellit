@@ -5,13 +5,17 @@ import {ProductService} from "../../services/product.service";
 import {ToastrService} from "ngx-toastr";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgIf} from "@angular/common";
+import {BetDto} from "../../dtos/betDto";
+import {BetService} from "../../services/bet.service";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-single-product-view',
   standalone: true,
   imports: [
     NavbarComponent,
-    NgIf
+    NgIf,
+    FormsModule
   ],
   templateUrl: './single-product-view.component.html',
   styleUrl: './single-product-view.component.scss'
@@ -20,9 +24,16 @@ export class SingleProductViewComponent implements OnInit {
 
   product: ProductDto;
   decodedImage: string;
-
+  bet:BetDto = {
+    id:null,
+    description:'',
+    amount:0,
+    user:null,
+    product:null
+  };
   constructor(
     private service: ProductService,
+    private betService:BetService,
     private notification: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
@@ -61,5 +72,20 @@ export class SingleProductViewComponent implements OnInit {
         this.decodedImage = 'data:image/jpeg;base64,' + this.product.imageData;
       }
     }
+  }
+
+  onSubmit(){
+    this.bet.product = this.product;
+    this.betService.createBet(this.bet).subscribe({
+      next: () => {
+        this.notification.success(`Bet successfully created`, "Success");
+
+        this.router.navigate(['/products']);
+
+      },
+      error: (error) => {
+
+      }
+    });
   }
 }

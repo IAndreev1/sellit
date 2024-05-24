@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.invoke.MethodHandles;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/v1/bet")
 public class BetEndPoint {
 
@@ -33,7 +35,7 @@ public class BetEndPoint {
 
     @Secured("ROLE_USER")
     @PostMapping
-    public BetDto create(BetDto betDto) {
+    public BetDto create(@RequestBody BetDto betDto) {
         LOGGER.trace("create({})", betDto);
         Bet createdBet = betService.create(betDto);
         return betMapper.entityToBetDto(createdBet);

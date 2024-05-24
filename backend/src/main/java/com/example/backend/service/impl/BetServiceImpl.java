@@ -2,8 +2,10 @@ package com.example.backend.service.impl;
 
 import com.example.backend.Endpoints.Mappers.BetMapper;
 import com.example.backend.Endpoints.dto.BetDto;
+import com.example.backend.Entity.ApplicationUser;
 import com.example.backend.Entity.Bet;
 import com.example.backend.repository.BetRepository;
+import com.example.backend.security.AuthService;
 import com.example.backend.service.BetService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,15 +21,21 @@ public class BetServiceImpl implements BetService {
 
     private final BetMapper betMapper;
 
-    public BetServiceImpl(BetRepository betRepository, BetMapper betMapper) {
+    private final AuthService authService;
+
+    public BetServiceImpl(BetRepository betRepository, BetMapper betMapper, AuthService authService) {
         this.betRepository = betRepository;
         this.betMapper = betMapper;
+        this.authService = authService;
     }
 
     @Override
     public Bet create(BetDto betDto) {
         LOGGER.trace("create({})", betDto);
-        return betRepository.save(betMapper.dtoToEntity(betDto));
+        ApplicationUser user = authService.getUserFromToken();
+        Bet toCreate = betMapper.dtoToEntity(betDto);
+        toCreate.setUser(user);
+        return betRepository.save(toCreate);
     }
 
     @Override

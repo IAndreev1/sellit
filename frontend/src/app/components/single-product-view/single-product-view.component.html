@@ -15,14 +15,14 @@
   <div class="row mt-5">
     <div class="col-md-12">
       <h2 class="text-center mb-4 bet-header">Place a Bet</h2>
-      <form>
+      <form (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="betAmount" class="bet-label">Bet Amount:</label>
-          <input type="number" class="form-control bet-amount" id="betAmount" placeholder="Enter bet amount">
+          <input type="number" class="form-control bet-amount" id="betAmount" placeholder="Enter bet amount" name="amount" [(ngModel)]="bet.amount">
         </div>
         <div class="form-group">
           <label for="betDescription" class="bet-label">Bet Description:</label>
-          <textarea class="form-control bet-description" id="betDescription" rows="3" placeholder="Enter bet description"></textarea>
+          <textarea class="form-control bet-description" id="betDescription" rows="3" placeholder="Enter bet description" name="description" [(ngModel)]="bet.description"></textarea>
         </div>
         <button type="submit" class="btn btn-primary btn-block btn-place-bet">Place Bet</button>
       </form>
