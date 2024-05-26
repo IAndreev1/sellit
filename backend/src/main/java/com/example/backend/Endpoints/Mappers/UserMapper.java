@@ -14,5 +14,7 @@ public abstract class UserMapper {
     public abstract UserDetailDto entityToUserDetailDto(ApplicationUser applicationUser);
     public abstract List<UserDetailDto> entityListToUserDetailDtoList(List<ApplicationUser> users);
 
+    public abstract ApplicationUser userDetailDtoToEntity(UserDetailDto userDetailDto);
+
 
 }

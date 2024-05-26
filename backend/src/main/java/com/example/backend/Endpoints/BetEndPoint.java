@@ -3,6 +3,7 @@ package com.example.backend.Endpoints;
 import com.example.backend.Endpoints.Mappers.BetMapper;
 import com.example.backend.Endpoints.dto.BetDto;
 import com.example.backend.Entity.Bet;
+import com.example.backend.Exceptions.AuthorizationException;
 import com.example.backend.service.BetService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,8 +44,8 @@ public class BetEndPoint {
 
     @Secured("ROLE_USER")
     @PutMapping
-    public BetDto update(BetDto betDto) {
-        return null;
+    public BetDto update(BetDto betDto) throws AuthorizationException {
+        return betMapper.entityToBetDto(betService.update(betDto));
     }
 
     @Secured("ROLE_USER")

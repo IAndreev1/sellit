@@ -2,6 +2,8 @@ package com.example.backend.service;
 
 import com.example.backend.Endpoints.dto.BetDto;
 import com.example.backend.Entity.Bet;
+import com.example.backend.Exceptions.AuthorizationException;
+
 /**
  * Service interface for managing bet operations.
  */
@@ -21,7 +23,7 @@ public interface BetService {
      * @param betDto The DTO containing updated information about the bet.
      * @return The updated bet entity.
      */
-    public Bet update(BetDto betDto);
+    public Bet update(BetDto betDto) throws AuthorizationException;
 
     /**
      * Deletes a bet with the specified ID.
