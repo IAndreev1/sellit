@@ -69,7 +69,17 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
-    public void delete(Long id) {
-
+    public void delete(Long id) throws AuthorizationException {
+        Bet toDel = betRepository.getBetById(id);
+        if (toDel != null) {
+            ApplicationUser user = authService.getUserFromToken();
+            if (user.getId().equals(toDel.getUser().getId())) {
+                betRepository.delete(toDel);
+            } else {
+                throw new AuthorizationException("User does not have access to delete this product", new ArrayList<>());
+            }
+        } else {
+            throw new NotFoundException("Product not found with id: " + id);
+        }
     }
 }

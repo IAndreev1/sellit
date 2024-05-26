@@ -50,7 +50,8 @@ public class BetEndPoint {
 
     @Secured("ROLE_USER")
     @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) throws AuthorizationException {
+        betService.delete(id);
     }
 
 }

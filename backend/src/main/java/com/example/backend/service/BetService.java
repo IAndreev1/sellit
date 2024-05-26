@@ -30,5 +30,5 @@ public interface BetService {
      *
      * @param id The ID of the bet to be deleted.
      */
-    public void delete(Long id);
+    public void delete(Long id) throws AuthorizationException;
 }
