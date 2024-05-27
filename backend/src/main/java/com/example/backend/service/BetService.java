@@ -1,8 +1,11 @@
 package com.example.backend.service;
 
 import com.example.backend.Endpoints.dto.BetDto;
+import com.example.backend.Endpoints.dto.ProductDto;
 import com.example.backend.Entity.Bet;
 import com.example.backend.Exceptions.AuthorizationException;
+
+import java.util.List;
 
 /**
  * Service interface for managing bet operations.
@@ -31,4 +34,12 @@ public interface BetService {
      * @param id The ID of the bet to be deleted.
      */
     public void delete(Long id) throws AuthorizationException;
+
+    /**
+     * Retrieves all bets associated with a specific product.
+     *
+     * @param productDto The data transfer object containing the product details.
+     * @return A list of Bet objects associated with the specified product.
+     */
+    public List<Bet> getAllBetsForProduct(ProductDto productDto);
 }

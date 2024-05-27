@@ -4,8 +4,10 @@ import com.example.backend.Endpoints.Mappers.BetMapper;
 import com.example.backend.Endpoints.Mappers.ProductMapper;
 import com.example.backend.Endpoints.Mappers.UserMapper;
 import com.example.backend.Endpoints.dto.BetDto;
+import com.example.backend.Endpoints.dto.ProductDto;
 import com.example.backend.Entity.ApplicationUser;
 import com.example.backend.Entity.Bet;
+import com.example.backend.Entity.Product;
 import com.example.backend.Exceptions.AuthorizationException;
 import com.example.backend.Exceptions.NotFoundException;
 import com.example.backend.repository.BetRepository;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BetServiceImpl implements BetService {
@@ -81,5 +85,14 @@ public class BetServiceImpl implements BetService {
         } else {
             throw new NotFoundException("Product not found with id: " + id);
         }
+    }
+
+
+    public List<BetDto> getBetsByProduct(Product product) {
+
+        return betRepository.getBetsByProduct(product).stream()
+                .map(betMapper::entityToBetDto)
+                .collect(Collectors.toCollection(ArrayList::new));
+
     }
 }

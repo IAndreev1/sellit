@@ -10,7 +10,6 @@ import com.example.backend.Exceptions.NotFoundException;
 import com.example.backend.repository.ProductRepository;
 import com.example.backend.security.AuthService;
 import com.example.backend.service.ProductService;
-import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -72,7 +71,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void delete(Long id) throws AuthorizationException {
         Product toDel = productRepository.getProductsById(id);
-
         if (toDel != null) {
             ApplicationUser user = authService.getUserFromToken();
             if (user.getId().equals(toDel.getUser().getId())) {
