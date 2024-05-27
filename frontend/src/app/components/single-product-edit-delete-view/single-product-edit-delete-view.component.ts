@@ -1,10 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {ProductService} from "../../services/product.service";
-import {ToastrService} from "ngx-toastr";
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {ProductDto} from "../../dtos/productDto";
-import {NavbarComponent} from "../navbar/navbar.component";
-import {NgIf} from "@angular/common";
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../../services/product.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ProductDto } from '../../dtos/productDto';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { DatePipe, NgForOf, NgIf } from '@angular/common';
+import { BetService } from '../../services/bet.service';
+import { BetDto } from '../../dtos/betDto';
+import {BetCardComponent} from "./bet-card/bet-card.component";
+
 
 @Component({
   selector: 'app-single-product-edit-delete-view',
@@ -12,23 +16,27 @@ import {NgIf} from "@angular/common";
   imports: [
     NavbarComponent,
     NgIf,
-    RouterLink
+    RouterLink,
+    DatePipe,
+    NgForOf,
+    BetCardComponent
   ],
   templateUrl: './single-product-edit-delete-view.component.html',
-  styleUrl: './single-product-edit-delete-view.component.scss'
+  styleUrls: ['./single-product-edit-delete-view.component.scss']
 })
 export class SingleProductEditDeleteViewComponent implements OnInit {
 
   product: ProductDto;
   decodedImage: string;
+  bets: BetDto[];
 
   constructor(
     private service: ProductService,
     private notification: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
-  ) {
-  }
+    private betService: BetService
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe({
@@ -36,15 +44,18 @@ export class SingleProductEditDeleteViewComponent implements OnInit {
         const prodId = params.id;
         this.service.getById(prodId).subscribe({
           next: res => {
-
             this.product = res;
-            console.log(this.product.name)
+            this.betService.getAllBetsForProduct(this.product).subscribe({
+              next: allBets => {
+                this.bets = allBets;
+              }
+            });
             this.decodeImage();
           },
-          error: error => {
-            this.router.navigate(['/account'])
+          error: () => {
+            this.router.navigate(['/account']);
           }
-        })
+        });
       },
       error: () => {
         this.router.navigate(['/account']);
@@ -58,5 +69,19 @@ export class SingleProductEditDeleteViewComponent implements OnInit {
         this.decodedImage = 'data:image/jpeg;base64,' + this.product.imageData;
       }
     }
+  }
+
+  acceptBet(bet: BetDto): void {
+    // Add your logic to accept the bet here
+    this.notification.success('Bet accepted successfully.');
+    // Optionally, remove the bet from the list or update its status
+    this.bets = this.bets.filter(b => b !== bet);
+  }
+
+  rejectBet(bet: BetDto): void {
+    // Add your logic to reject the bet here
+    this.notification.error('Bet rejected successfully.');
+    // Optionally, remove the bet from the list or update its status
+    this.bets = this.bets.filter(b => b !== bet);
   }
 }

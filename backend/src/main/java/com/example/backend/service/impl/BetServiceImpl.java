@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -87,12 +88,14 @@ public class BetServiceImpl implements BetService {
         }
     }
 
-
-    public List<BetDto> getBetsByProduct(Product product) {
-
-        return betRepository.getBetsByProduct(product).stream()
+    @Override
+    public List<BetDto> getAllBetsForProduct(Long prodId) {
+        return betRepository.getBetsByProductId(prodId).stream()
+                .sorted(Comparator.comparingDouble(Bet::getAmount).reversed()) // Sort by amount in descending order
                 .map(betMapper::entityToBetDto)
-                .collect(Collectors.toCollection(ArrayList::new));
-
+                .collect(Collectors.toList());
     }
+
+
+
 }

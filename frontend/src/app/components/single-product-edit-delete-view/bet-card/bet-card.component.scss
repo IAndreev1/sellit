@@ -1,0 +1,26 @@
+.card {
+  border-radius: 0.75rem;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-amount {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007bff; /* Bootstrap primary color */
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.btn {
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+}

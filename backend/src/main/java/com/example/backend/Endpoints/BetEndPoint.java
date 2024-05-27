@@ -59,8 +59,8 @@ public class BetEndPoint {
 
     @Secured("ROLE_USER")
     @GetMapping("allBets")
-    public List<Bet> getAllBetsForProduct(ProductDto productDto) {
-        return betService.getAllBetsForProduct(productDto);
+    public List<BetDto> getAllBetsForProduct(Long prodId) {
+        return betService.getAllBetsForProduct(prodId);
     }
 
 }

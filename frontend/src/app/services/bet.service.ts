@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Globals} from "../global/globals";
 import {AuthService} from "./auth.service";
 import {ProductDto} from "../dtos/productDto";
@@ -22,5 +22,19 @@ export class BetService {
     });
 
     return this.http.post<BetDto>(this.baseUri, bet, {headers});
+  }
+
+  getAllBetsForProduct(product: ProductDto): Observable<BetDto[]> {
+
+    const headers = new HttpHeaders({
+      'Authorization': this.authService.getToken()
+    });
+    let params = new HttpParams();
+    if (product) {
+      params = params.append('prodId', product.id);
+    }
+
+    return this.http.get<BetDto[]>(this.baseUri + "/allBets", {params,headers});
+
   }
 }

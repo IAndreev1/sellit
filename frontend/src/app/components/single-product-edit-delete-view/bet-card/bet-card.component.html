@@ -1,0 +1,14 @@
+<div class="card mb-3 shadow-sm">
+  <div class="card-body">
+    <p class="card-amount">Amount: ${{ bet.amount }}</p>
+    <h5 class="card-title">{{ bet.description }}</h5>
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-success btn-sm me-2" (click)="onAccept()">
+        Accept
+      </button>
+      <button class="btn btn-danger btn-sm" (click)="onReject()">
+        Reject
+      </button>
+    </div>
+  </div>
+</div>

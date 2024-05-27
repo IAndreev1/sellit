@@ -1,0 +1,28 @@
+.product-image {
+  max-width: 300px; /* Set the maximum width */
+  max-height: 300px; /* Set the maximum height */
+  object-fit: cover;
+  margin: auto; /* Center the image within the column */
+}
+
+.product-name {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.product-description {
+  margin-bottom: 20px;
+}
+
+.product-price {
+  margin-bottom: 20px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+}
+
+.list-group-item {
+  margin-bottom: 10px;
+}

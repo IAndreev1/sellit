@@ -21,7 +21,7 @@ import {Router} from "@angular/router";
   styleUrl: './account.component.scss'
 })
 export class AccountComponent implements OnInit {
-  activeSection: string = 'changeName';
+  activeSection: string = 'viewProducts';
   newName: string = '';
   currentPassword: string = '';
   newPassword: string = '';

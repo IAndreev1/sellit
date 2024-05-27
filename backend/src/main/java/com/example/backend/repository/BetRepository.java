@@ -11,4 +11,6 @@ public interface BetRepository extends JpaRepository<Bet, Long> {
     Bet getBetById(Long id);
 
     List<Bet> getBetsByProduct(Product product);
+
+    List<Bet> getBetsByProductId(Long id);
 }

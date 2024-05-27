@@ -38,8 +38,8 @@ public interface BetService {
     /**
      * Retrieves all bets associated with a specific product.
      *
-     * @param productDto The data transfer object containing the product details.
+     * @param prodId The id of the product.
      * @return A list of Bet objects associated with the specified product.
      */
-    public List<Bet> getAllBetsForProduct(ProductDto productDto);
+    public List<BetDto> getAllBetsForProduct(Long prodId);
 }
