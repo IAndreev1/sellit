@@ -7,6 +7,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Entity
 public class Bet {
     @Id
@@ -16,6 +19,8 @@ public class Bet {
     private String description;
 
     private Double amount;
+
+    private LocalDate date;
     @ManyToOne
     private ApplicationUser user;
     @ManyToOne
@@ -27,6 +32,14 @@ public class Bet {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalDate getDate() {
+        return date;
     }
 
     public void setDescription(String description) {

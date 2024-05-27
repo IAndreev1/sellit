@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -51,6 +53,7 @@ public class BetServiceImpl implements BetService {
         ApplicationUser user = authService.getUserFromToken();
         Bet toCreate = betMapper.dtoToEntity(betDto);
         toCreate.setUser(user);
+        toCreate.setDate(LocalDate.now());
         return betRepository.save(toCreate);
     }
 
@@ -96,6 +99,11 @@ public class BetServiceImpl implements BetService {
                 .collect(Collectors.toList());
     }
 
+    public List<BetDto> getAllBetsForUser() {
+        ApplicationUser user = authService.getUserFromToken();
+        List<Bet> bets = betRepository.getBetsByUser(user);
+        return null;
+    }
 
 
 }

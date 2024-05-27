@@ -6,6 +6,7 @@ export class BetDto {
     public id?: number,
     public description?: string,
     public amount?: number,
+    public date?:Date,
     public user?: UserDetail,
     public product?: ProductDto
   ) {}
