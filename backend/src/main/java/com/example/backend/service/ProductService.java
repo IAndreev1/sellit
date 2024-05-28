@@ -49,5 +49,12 @@ public interface ProductService {
      */
     List<ProductDto> getUserProducts();
 
+    /**
+     * Retrieves a product by its ID.
+     *
+     * @param id The ID of the product to retrieve.
+     * @return The product with the specified ID.
+     */
     Product getById(Long id);
+
 }

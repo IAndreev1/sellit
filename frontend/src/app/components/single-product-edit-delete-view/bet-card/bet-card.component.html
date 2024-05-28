@@ -1,12 +1,15 @@
-<div class="card mb-3 shadow-sm">
-  <div class="card-body">
-    <p class="card-amount">Amount: ${{ bet.amount }}</p>
-    <h5 class="card-title">{{ bet.description }}</h5>
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-success btn-sm me-2" (click)="onAccept()">
+<div class="card mb-2 shadow-sm w-100">
+  <div class="card-body p-2 d-flex flex-column">
+    <div class="d-flex justify-content-between mb-1">
+      <p class="card-amount mb-0" >Amount: ${{ bet.amount }}</p>
+      <p class="card-date mb-0" >Date: {{ bet.date | date:'shortDate' }}</p>
+    </div>
+    <h5 class="card-title mb-2" >{{ bet.description }}</h5>
+    <div class="mt-auto d-flex justify-content-end">
+      <button class="btn btn-success btn-sm me-1" (click)="onAccept()">
         Accept
       </button>
-      <button class="btn btn-danger btn-sm" (click)="onReject()">
+      <button class="btn btn-danger btn-sm"  (click)="onReject()">
         Reject
       </button>
     </div>
