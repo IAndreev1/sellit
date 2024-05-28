@@ -63,4 +63,10 @@ public class BetEndPoint {
         return betService.getAllBetsForProduct(prodId);
     }
 
+    @Secured("ROLE_USER")
+    @GetMapping("allBetsOfUser")
+    public List<BetDto> getAllBetsOfUser() {
+        return betService.getAllBetsForUser();
+    }
+
 }

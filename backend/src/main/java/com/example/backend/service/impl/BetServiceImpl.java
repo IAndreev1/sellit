@@ -99,10 +99,14 @@ public class BetServiceImpl implements BetService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<BetDto> getAllBetsForUser() {
         ApplicationUser user = authService.getUserFromToken();
         List<Bet> bets = betRepository.getBetsByUser(user);
-        return null;
+        return bets.stream()
+                .map(betMapper::entityToBetDto)
+                .collect(Collectors.toCollection(ArrayList::new));
+
     }
 
 

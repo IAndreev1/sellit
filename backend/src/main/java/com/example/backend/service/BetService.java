@@ -42,4 +42,11 @@ public interface BetService {
      * @return A list of Bet objects associated with the specified product.
      */
     public List<BetDto> getAllBetsForProduct(Long prodId);
+
+    /**
+     * Retrieves all bets associated with the current user.
+     *
+     * @return A list of BetDto objects associated with the current user.
+     */
+    public List<BetDto> getAllBetsForUser();
 }
