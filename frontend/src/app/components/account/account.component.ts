@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
-import {NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {NavbarComponent} from "../navbar/navbar.component";
 import {ProductCardComponent} from "../products/product-card/product-card.component";
 import {AllProductsService} from "../../services/all-products.service";
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
+import {BetCardComponent} from "../single-product-edit-delete-view/bet-card/bet-card.component";
+import {MyBetCardComponent} from "./my-bet-card/my-bet-card.component";
 
 @Component({
   selector: 'app-account',
@@ -15,7 +17,10 @@ import {Router} from "@angular/router";
     NgIf,
     NgForOf,
     NavbarComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    DatePipe,
+    BetCardComponent,
+    MyBetCardComponent
   ],
   templateUrl: './account.component.html',
   styleUrl: './account.component.scss'
@@ -26,6 +31,7 @@ export class AccountComponent implements OnInit {
   currentPassword: string = '';
   newPassword: string = '';
   products = [];
+  bets: [];
 
 
   constructor(private service: AllProductsService,

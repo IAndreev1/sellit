@@ -5,13 +5,10 @@
     <div class="col-md-4">
       <h2>Account Settings</h2>
       <div class="btn-group-vertical w-100" role="group" aria-label="Account Settings">
-        <button type="button" class="btn btn-outline-primary mb-2" (click)="toggleSection('viewProducts')">My Products
-        </button>
-        <button type="button" class="btn btn-outline-primary mb-2" (click)="toggleSection('changeName')">Change Name
-        </button>
-        <button type="button" class="btn btn-outline-primary mb-2" (click)="toggleSection('changePassword')">Change
-          Password
-        </button>
+        <button type="button" class="btn btn-outline-primary mb-2" (click)="toggleSection('viewProducts')">My Products</button>
+        <button type="button" class="btn btn-outline-primary mb-2" (click)="toggleSection('myBets')">My Bets</button>
+        <button type="button" class="btn btn-outline-primary mb-2" (click)="toggleSection('changeName')">Change Name</button>
+        <button type="button" class="btn btn-outline-primary mb-2" (click)="toggleSection('changePassword')">Change Password</button>
       </div>
     </div>
     <div class="col-md-8">
@@ -30,8 +27,7 @@
         <form (ngSubmit)="changePassword()">
           <div class="form-group">
             <label for="currentPassword">Current Password</label>
-            <input type="password" class="form-control" id="currentPassword" [(ngModel)]="currentPassword"
-                   name="currentPassword">
+            <input type="password" class="form-control" id="currentPassword" [(ngModel)]="currentPassword" name="currentPassword">
           </div>
           <div class="form-group">
             <label for="newPassword">New Password</label>
@@ -45,11 +41,14 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
           <ng-container *ngFor="let product of products">
             <div class="col" (click)="redirectToProduct(product.id)">
-              <app-product-card [name]="product.name" [description]="product.description" [price]="product.price"
-                                [imageData]="product.imageData"></app-product-card>
+              <app-product-card [name]="product.name" [description]="product.description" [price]="product.price" [imageData]="product.imageData"></app-product-card>
             </div>
           </ng-container>
         </div>
+      </div>
+      <div *ngIf="activeSection === 'myBets'">
+        <h3>My Bets</h3>
+        <app-my-bet-card *ngFor="let bet of bets" [bet]="bet"></app-my-bet-card>
       </div>
     </div>
   </div>
