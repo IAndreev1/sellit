@@ -8,6 +8,7 @@ import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 import {BetCardComponent} from "../single-product-edit-delete-view/bet-card/bet-card.component";
 import {MyBetCardComponent} from "./my-bet-card/my-bet-card.component";
+import {BetService} from "../../services/bet.service";
 
 @Component({
   selector: 'app-account',
@@ -31,16 +32,18 @@ export class AccountComponent implements OnInit {
   currentPassword: string = '';
   newPassword: string = '';
   products = [];
-  bets: [];
+  bets = [];
 
 
   constructor(private service: AllProductsService,
               private notification: ToastrService,
-              private router: Router) {
+              private router: Router,
+              private betService:BetService) {
   }
 
   ngOnInit(): void {
     this.loadProducts();
+    this.loadBets();
   }
 
 
@@ -68,6 +71,17 @@ export class AccountComponent implements OnInit {
     )
   }
 
+  loadBets(){
+    this.betService.getAllBetsOfUser().subscribe({
+        next: res => {
+          this.bets = res;
+        },
+        error: error => {
+
+        }
+      }
+    )
+  }
 
   deleteProduct(productId: number) {
     this.products = this.products.filter(product => product.id !== productId);

@@ -34,7 +34,16 @@ export class BetService {
       params = params.append('prodId', product.id);
     }
 
-    return this.http.get<BetDto[]>(this.baseUri + "/allBets", {params,headers});
+    return this.http.get<BetDto[]>(this.baseUri + "/allBets", {params, headers});
+
+  }
+
+  getAllBetsOfUser(): Observable<BetDto[]> {
+
+    const headers = new HttpHeaders({
+      'Authorization': this.authService.getToken()
+    });
+    return this.http.get<BetDto[]>(this.baseUri + "/allBetsOfUser", {headers});
 
   }
 }
