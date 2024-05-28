@@ -41,14 +41,14 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
           <ng-container *ngFor="let product of products">
             <div class="col" (click)="redirectToProduct(product.id)">
-              <app-product-card [name]="product.name" [description]="product.description" [price]="product.price" [imageData]="product.imageData"></app-product-card>
+              <app-product-card [name]="product.name" [description]="product.description" [price]="product.price" [imageData]="product.imageData" ></app-product-card>
             </div>
           </ng-container>
         </div>
       </div>
       <div *ngIf="activeSection === 'myBets'">
         <h3>My Bets</h3>
-        <app-my-bet-card *ngFor="let bet of bets" [bet]="bet"></app-my-bet-card>
+        <app-my-bet-card *ngFor="let bet of bets" [bet]="bet" (delete)="deleteBet($event)"></app-my-bet-card>
       </div>
     </div>
   </div>

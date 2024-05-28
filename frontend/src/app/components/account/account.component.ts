@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {BetCardComponent} from "../single-product-edit-delete-view/bet-card/bet-card.component";
 import {MyBetCardComponent} from "./my-bet-card/my-bet-card.component";
 import {BetService} from "../../services/bet.service";
+import {BetDto} from "../../dtos/betDto";
 
 @Component({
   selector: 'app-account',
@@ -38,7 +39,7 @@ export class AccountComponent implements OnInit {
   constructor(private service: AllProductsService,
               private notification: ToastrService,
               private router: Router,
-              private betService:BetService) {
+              private betService: BetService) {
   }
 
   ngOnInit(): void {
@@ -71,7 +72,7 @@ export class AccountComponent implements OnInit {
     )
   }
 
-  loadBets(){
+  loadBets() {
     this.betService.getAllBetsOfUser().subscribe({
         next: res => {
           this.bets = res;
@@ -90,5 +91,25 @@ export class AccountComponent implements OnInit {
 
   redirectToProduct(productId: string) {
     this.router.navigate(['/' + productId + '/myProduct']);
+  }
+
+  deleteBet(bet: BetDto): void {
+    this.betService.deleteBet(bet).subscribe({
+        next: res => {
+
+        },
+        error: error => {
+
+        }
+      }
+    )
+
+
+
+
+    // Add your logic to reject the bet here
+    this.notification.error('Bet rejected successfully.');
+    // Optionally, remove the bet from the list or update its status
+    this.bets = this.bets.filter(b => b !== bet);
   }
 }

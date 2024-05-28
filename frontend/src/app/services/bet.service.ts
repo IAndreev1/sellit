@@ -46,4 +46,12 @@ export class BetService {
     return this.http.get<BetDto[]>(this.baseUri + "/allBetsOfUser", {headers});
 
   }
+
+  deleteBet(bet:BetDto){
+    const headers = new HttpHeaders({
+                                      'Authorization': this.authService.getToken()
+  });
+  return this.http.delete(this.baseUri + "/" + bet.id, {headers});
+
+  }
 }

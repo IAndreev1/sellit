@@ -84,4 +84,6 @@ export class SingleProductEditDeleteViewComponent implements OnInit {
     // Optionally, remove the bet from the list or update its status
     this.bets = this.bets.filter(b => b !== bet);
   }
+
+
 }
