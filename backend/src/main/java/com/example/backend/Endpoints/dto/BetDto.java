@@ -12,6 +12,8 @@ public record BetDto(
        String description,
        Double amount,
        LocalDate date,
+       boolean accepted,
+       boolean rejected,
        UserDetailDto user,
        ProductDto product
 

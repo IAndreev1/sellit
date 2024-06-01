@@ -67,6 +67,9 @@ public class BetServiceImpl implements BetService {
                 existingBet.setProduct(productMapper.dtoToEntity(betDto.product()));
                 existingBet.setDescription(betDto.description());
                 existingBet.setAmount(betDto.amount());
+                if(betDto.accepted() && !existingBet.isAccepted()){
+                    acceptBet(existingBet);
+                }
                 return betRepository.save(existingBet);
             } else {
                 throw new AuthorizationException("User does not have access to update this product", new ArrayList<>());
@@ -107,6 +110,15 @@ public class BetServiceImpl implements BetService {
                 .map(betMapper::entityToBetDto)
                 .collect(Collectors.toCollection(ArrayList::new));
 
+    }
+
+    private void acceptBet(Bet bet) throws AuthorizationException {
+        Product product = bet.getProduct();
+        List<Bet> betsForTheSameProduct = betRepository.getBetsByProductId(product.getId());
+
+        for(Bet b : betsForTheSameProduct){
+            update(new BetDto(b.getId(),b.getDescription(),b.getAmount(),b.getDate(),false,true,userMapper.entityToUserDetailDto(b.getUser()),productMapper.entityToProductDto(product)));
+        }
     }
 
 

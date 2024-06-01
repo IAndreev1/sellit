@@ -49,4 +49,6 @@ public interface BetService {
      * @return A list of BetDto objects associated with the current user.
      */
     public List<BetDto> getAllBetsForUser();
+
+
 }

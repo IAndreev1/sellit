@@ -21,6 +21,10 @@ public class Bet {
     private Double amount;
 
     private LocalDate date;
+
+    private boolean accepted;
+
+    private boolean rejected;
     @ManyToOne
     private ApplicationUser user;
     @ManyToOne
@@ -74,5 +78,19 @@ public class Bet {
         return product;
     }
 
+    public boolean isAccepted() {
+        return accepted;
+    }
 
+    public boolean isRejected() {
+        return rejected;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
+
+    public void setRejected(boolean rejected) {
+        this.rejected = rejected;
+    }
 }
