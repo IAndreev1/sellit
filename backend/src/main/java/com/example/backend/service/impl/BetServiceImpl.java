@@ -13,6 +13,7 @@ import com.example.backend.Exceptions.NotFoundException;
 import com.example.backend.repository.BetRepository;
 import com.example.backend.security.AuthService;
 import com.example.backend.service.BetService;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,7 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
+    @Transactional
     public Bet create(BetDto betDto) {
         LOGGER.trace("create({})", betDto);
         ApplicationUser user = authService.getUserFromToken();
@@ -59,6 +61,7 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
+    @Transactional
     public Bet update(BetDto betDto) throws AuthorizationException {
         Bet existingBet = betRepository.getBetById(betDto.id());
         if (existingBet != null) {
@@ -81,6 +84,7 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) throws AuthorizationException {
         Bet toDel = betRepository.getBetById(id);
         if (toDel != null) {

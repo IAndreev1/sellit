@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../../services/product.service';
-import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ProductDto } from '../../dtos/productDto';
-import { NavbarComponent } from '../navbar/navbar.component';
-import { DatePipe, NgForOf, NgIf } from '@angular/common';
-import { BetService } from '../../services/bet.service';
-import { BetDto } from '../../dtos/betDto';
+import {Component, OnInit} from '@angular/core';
+import {ProductService} from '../../services/product.service';
+import {ToastrService} from 'ngx-toastr';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {ProductDto} from '../../dtos/productDto';
+import {NavbarComponent} from '../navbar/navbar.component';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
+import {BetService} from '../../services/bet.service';
+import {BetDto} from '../../dtos/betDto';
 import {BetCardComponent} from "./bet-card/bet-card.component";
 
 
@@ -36,7 +36,8 @@ export class SingleProductEditDeleteViewComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private betService: BetService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe({
@@ -95,5 +96,12 @@ export class SingleProductEditDeleteViewComponent implements OnInit {
 
   }
 
+  deleteProd() {
+    this.service.delete(this.product.id).subscribe({
+      next: allBets => {
+
+      }
+    });
+  }
 
 }

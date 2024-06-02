@@ -10,6 +10,7 @@ import com.example.backend.Exceptions.NotFoundException;
 import com.example.backend.repository.ProductRepository;
 import com.example.backend.security.AuthService;
 import com.example.backend.service.ProductService;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public Product create(ProductDto productDto) {
         LOGGER.trace("create({})", productDto);
         ApplicationUser user = authService.getUserFromToken();
@@ -48,6 +50,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public Product update(ProductDto productDto) throws AuthorizationException {
         Product existingProduct = productRepository.getProductsById(productDto.id());
 
@@ -69,6 +72,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) throws AuthorizationException {
         Product toDel = productRepository.getProductsById(id);
         if (toDel != null) {

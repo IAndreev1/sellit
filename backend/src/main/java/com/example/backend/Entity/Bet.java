@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -28,6 +30,7 @@ public class Bet {
     @ManyToOne
     private ApplicationUser user;
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Product product;
 
     public void setUser(ApplicationUser user) {

@@ -37,5 +37,11 @@ export class ProductService {
     return this.http.put<ProductDto>(`${this.baseUri}`,product,{headers});
   }
 
+  delete(id:number){
+    const headers = new HttpHeaders({
+      'Authorization': this.authService.getToken()
+    });
+    return this.http.delete<ProductDto>(`${this.baseUri}` +"/" +id,{headers});
+  }
 
 }
