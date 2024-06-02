@@ -63,22 +63,21 @@ public class BetServiceImpl implements BetService {
         Bet existingBet = betRepository.getBetById(betDto.id());
         if (existingBet != null) {
             ApplicationUser user = authService.getUserFromToken();
-            if (user.getId().equals(existingBet.getUser().getId())) {
-                existingBet.setDescription(betDto.description());
-                existingBet.setAmount(betDto.amount());
-                existingBet.setRejected(betDto.rejected());
-                if (betDto.accepted() && !existingBet.isAccepted()) {
-                    existingBet.setAccepted(true);
-                    acceptBet(existingBet);
-                }
-                existingBet.setAccepted(betDto.accepted());
-                return betRepository.save(existingBet);
-            } else {
-                throw new AuthorizationException("User does not have access to update this product", new ArrayList<>());
+
+            existingBet.setDescription(betDto.description());
+            existingBet.setAmount(betDto.amount());
+            existingBet.setRejected(betDto.rejected());
+            if (betDto.accepted() && !existingBet.isAccepted()) {
+                existingBet.setAccepted(true);
+                acceptBet(existingBet);
             }
+            existingBet.setAccepted(betDto.accepted());
+            return betRepository.save(existingBet);
+
         } else {
             throw new NotFoundException("Bet with id: " + betDto.id() + " not found");
         }
+
     }
 
     @Override
@@ -114,7 +113,7 @@ public class BetServiceImpl implements BetService {
 
     }
 
-    //TODO!!!
+
     private void acceptBet(Bet bet) throws AuthorizationException {
         Product product = bet.getProduct();
         List<Bet> betsForTheSameProduct = betRepository.getBetsByProductId(product.getId());
