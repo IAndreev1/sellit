@@ -24,6 +24,13 @@ export class BetService {
     return this.http.post<BetDto>(this.baseUri, bet, {headers});
   }
 
+  updateBet(bet:BetDto): Observable<BetDto> {
+    const headers = new HttpHeaders({
+      'Authorization': this.authService.getToken()
+    });
+    return this.http.put<BetDto>(this.baseUri, bet, {headers});
+  }
+
   getAllBetsForProduct(product: ProductDto): Observable<BetDto[]> {
 
     const headers = new HttpHeaders({

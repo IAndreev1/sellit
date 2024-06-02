@@ -72,10 +72,14 @@ export class SingleProductEditDeleteViewComponent implements OnInit {
   }
 
   acceptBet(bet: BetDto): void {
-    // Add your logic to accept the bet here
+    bet.accepted = true;
+    this.betService.updateBet(bet).subscribe({
+      next: allBets => {
+        this.ngOnInit();
+      }
+    });
     this.notification.success('Bet accepted successfully.');
-    // Optionally, remove the bet from the list or update its status
-    this.bets = this.bets.filter(b => b !== bet);
+
   }
 
   rejectBet(bet: BetDto): void {

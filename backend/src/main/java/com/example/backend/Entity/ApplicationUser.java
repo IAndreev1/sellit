@@ -1,6 +1,7 @@
 package com.example.backend.Entity;
 
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
@@ -40,7 +41,7 @@ public class ApplicationUser implements UserDetails {
     private Boolean admin;
     @OneToMany
     private List<Product> userProducts;
-    @OneToMany
+    @OneToMany(cascade= CascadeType.ALL)
     private List<Bet> bets;
 
     @Override

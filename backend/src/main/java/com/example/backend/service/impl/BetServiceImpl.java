@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -63,13 +64,14 @@ public class BetServiceImpl implements BetService {
         if (existingBet != null) {
             ApplicationUser user = authService.getUserFromToken();
             if (user.getId().equals(existingBet.getUser().getId())) {
-                existingBet.setUser(userMapper.userDetailDtoToEntity(betDto.user()));
-                existingBet.setProduct(productMapper.dtoToEntity(betDto.product()));
                 existingBet.setDescription(betDto.description());
                 existingBet.setAmount(betDto.amount());
-                if(betDto.accepted() && !existingBet.isAccepted()){
+                existingBet.setRejected(betDto.rejected());
+                if (betDto.accepted() && !existingBet.isAccepted()) {
+                    existingBet.setAccepted(true);
                     acceptBet(existingBet);
                 }
+                existingBet.setAccepted(betDto.accepted());
                 return betRepository.save(existingBet);
             } else {
                 throw new AuthorizationException("User does not have access to update this product", new ArrayList<>());
@@ -112,12 +114,15 @@ public class BetServiceImpl implements BetService {
 
     }
 
+    //TODO!!!
     private void acceptBet(Bet bet) throws AuthorizationException {
         Product product = bet.getProduct();
         List<Bet> betsForTheSameProduct = betRepository.getBetsByProductId(product.getId());
 
-        for(Bet b : betsForTheSameProduct){
-            update(new BetDto(b.getId(),b.getDescription(),b.getAmount(),b.getDate(),false,true,userMapper.entityToUserDetailDto(b.getUser()),productMapper.entityToProductDto(product)));
+        for (Bet b : betsForTheSameProduct) {
+            if (!Objects.equals(b.getId(), bet.getId())) {
+                update(new BetDto(b.getId(), b.getDescription(), b.getAmount(), b.getDate(), false, true, userMapper.entityToUserDetailDto(b.getUser()), productMapper.entityToProductDto(product)));
+            }
         }
     }
 

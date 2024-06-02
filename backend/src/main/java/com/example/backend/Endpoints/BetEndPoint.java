@@ -47,7 +47,7 @@ public class BetEndPoint {
 
     @Secured("ROLE_USER")
     @PutMapping
-    public BetDto update(BetDto betDto) throws AuthorizationException {
+    public BetDto update(@RequestBody BetDto betDto) throws AuthorizationException {
         return betMapper.entityToBetDto(betService.update(betDto));
     }
 

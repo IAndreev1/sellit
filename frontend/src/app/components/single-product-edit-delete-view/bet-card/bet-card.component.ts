@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {BetDto} from "../../../dtos/betDto";
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgIf} from "@angular/common";
 
 
 @Component({
@@ -8,7 +8,8 @@ import {DatePipe} from "@angular/common";
   standalone: true,
   templateUrl: './bet-card.component.html',
   imports: [
-    DatePipe
+    DatePipe,
+    NgIf
   ],
   styleUrls: ['./bet-card.component.scss']
 })

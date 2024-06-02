@@ -7,6 +7,8 @@ export class BetDto {
     public description?: string,
     public amount?: number,
     public date?:Date,
+    public accepted?:boolean,
+    public rejected?:boolean,
     public user?: UserDetail,
     public product?: ProductDto
   ) {}
