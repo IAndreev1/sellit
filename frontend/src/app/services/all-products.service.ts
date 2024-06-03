@@ -27,6 +27,12 @@ export class AllProductsService {
     if (searchParameters.description) {
       params = params.append('description', searchParameters.description);
     }
+    if (searchParameters.priceFrom) {
+      params = params.set('priceFrom', searchParameters.priceFrom);
+    }
+    if (searchParameters.priceTo) {
+      params = params.set('priceTo', searchParameters.priceTo);
+    }
 
     const headers = new HttpHeaders({
       'Authorization': this.authService.getToken()
