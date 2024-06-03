@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {AuthRequest, UserDetail} from '../dtos/auth-request';
+import {AuthRequest, ChangePasswordDto, UserDetail} from '../dtos/auth-request';
 import {Observable} from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {tap} from 'rxjs/operators';
 import {jwtDecode} from 'jwt-decode';
 import {Globals} from '../global/globals';
@@ -119,5 +119,22 @@ export class AuthService {
       }),
     };
     return this.httpClient.put<UserDetail>(this.authBaseUri + "/admin", selectedUserId, httpOptions);
+  }
+
+  changePassword(changePasswordDto:ChangePasswordDto):Observable<boolean>{
+    const headers = new HttpHeaders({
+      'Authorization': this.getToken()
+    });
+    console.log(changePasswordDto.newPassword)
+
+   return this.httpClient.put<boolean>(this.authBaseUri,changePasswordDto,{headers})
+  }
+
+  getActiveUser():Observable<UserDetail>{
+    const headers = new HttpHeaders({
+      'Authorization': this.getToken()
+    });
+
+    return this.httpClient.get<UserDetail>(this.authBaseUri + "/user", {headers})
   }
 }

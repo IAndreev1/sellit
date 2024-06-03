@@ -99,7 +99,7 @@ export class SingleProductEditDeleteViewComponent implements OnInit {
   deleteProd() {
     this.service.delete(this.product.id).subscribe({
       next: allBets => {
-
+        this.router.navigate(['/account']);
       }
     });
   }

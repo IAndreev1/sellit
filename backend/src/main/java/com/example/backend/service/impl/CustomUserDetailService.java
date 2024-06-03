@@ -1,8 +1,10 @@
 package com.example.backend.service.impl;
 
+import com.example.backend.Endpoints.dto.ChangePasswordDto;
 import com.example.backend.Endpoints.dto.UserDetailDto;
 import com.example.backend.Endpoints.dto.UserLoginDto;
 import com.example.backend.Entity.ApplicationUser;
+import com.example.backend.Exceptions.AuthorizationException;
 import com.example.backend.Exceptions.ConflictException;
 import com.example.backend.Exceptions.NotFoundException;
 import com.example.backend.Exceptions.ValidationException;
@@ -21,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -29,6 +32,8 @@ public class CustomUserDetailService implements UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenizer jwtTokenizer;
+
+
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Autowired
@@ -36,6 +41,8 @@ public class CustomUserDetailService implements UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenizer = jwtTokenizer;
+
+
     }
 
 
@@ -56,6 +63,7 @@ public class CustomUserDetailService implements UserService {
         }
         throw new NotFoundException(String.format("Could not find the user with the email address %s", email));
     }
+
     @Override
     public String login(UserLoginDto userLoginDto) throws ValidationException, ConflictException {
         LOGGER.trace("login({})", userLoginDto);
@@ -99,6 +107,24 @@ public class CustomUserDetailService implements UserService {
     }
 
     @Override
+    public boolean changeUserName(String newUserName) {
+        return false;
+    }
+
+    @Override
+    public boolean changePassword(ChangePasswordDto changePasswordDto) throws AuthorizationException {
+        ApplicationUser user = findApplicationUserByEmail(changePasswordDto.email());
+        if (passwordEncoder.matches(changePasswordDto.oldPassword(), user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(changePasswordDto.newPassword()));
+            userRepository.save(user);
+        } else {
+            throw new AuthorizationException("Old Password does not match", new LinkedList<>());
+        }
+        return false;
+    }
+
+
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         LOGGER.debug("Load all user by email");
         ApplicationUser applicationUser = userRepository.findUserByEmail(email);
@@ -118,4 +144,6 @@ public class CustomUserDetailService implements UserService {
         return toRet;
 
     }
+
+
 }

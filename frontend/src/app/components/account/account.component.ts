@@ -10,6 +10,8 @@ import {BetCardComponent} from "../single-product-edit-delete-view/bet-card/bet-
 import {MyBetCardComponent} from "./my-bet-card/my-bet-card.component";
 import {BetService} from "../../services/bet.service";
 import {BetDto} from "../../dtos/betDto";
+import {AuthService} from "../../services/auth.service";
+import {ChangePasswordDto, UserDetail} from "../../dtos/auth-request";
 
 @Component({
   selector: 'app-account',
@@ -34,19 +36,37 @@ export class AccountComponent implements OnInit {
   newPassword: string = '';
   products = [];
   bets = [];
-
+  passwords: ChangePasswordDto = {
+    email:'',
+    oldPassword:'',
+    newPassword:''
+  };
+  user: UserDetail
 
   constructor(private service: AllProductsService,
               private notification: ToastrService,
               private router: Router,
-              private betService: BetService) {
+              private betService: BetService,
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
     this.loadProducts();
     this.loadBets();
+    this.loadUser();
   }
 
+
+  loadUser() {
+    this.authService.getActiveUser().subscribe({
+      next: res => {
+        this.user = res;
+      },
+      error: error => {
+
+      }
+    })
+  }
 
   toggleSection(section: string) {
     this.activeSection = section;
@@ -57,7 +77,16 @@ export class AccountComponent implements OnInit {
   }
 
   changePassword() {
-    console.log('Password changed to:', this.newPassword);
+    this.passwords.email = this.user.email;
+    this.authService.changePassword(this.passwords).subscribe({
+      next: res => {
+        console.log("Success")
+      },
+      error: error => {
+
+      }
+    })
+
   }
 
   loadProducts() {
@@ -105,11 +134,11 @@ export class AccountComponent implements OnInit {
     )
 
 
-
-
     // Add your logic to reject the bet here
     this.notification.error('Bet rejected successfully.');
     // Optionally, remove the bet from the list or update its status
     this.bets = this.bets.filter(b => b !== bet);
   }
+
+
 }

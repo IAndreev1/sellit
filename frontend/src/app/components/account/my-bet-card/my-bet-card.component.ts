@@ -24,4 +24,6 @@ export class MyBetCardComponent {
   onDelete(): void {
     this.delete.emit(this.bet);
   }
+
+
 }
