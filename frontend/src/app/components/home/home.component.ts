@@ -1,15 +1,52 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NavbarComponent} from "../navbar/navbar.component";
+import {AllProductsService} from "../../services/all-products.service";
+import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
+import {ProductDto, ProductSearchDto} from "../../dtos/productDto";
+import {ProductCardComponent} from "../products/product-card/product-card.component";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    NavbarComponent
+    NavbarComponent,
+    ProductCardComponent,
+    NgForOf
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
 
+  products:ProductDto[]
+
+  searchParameters: ProductSearchDto = {
+    name: '',
+    description: '',
+    priceFrom: 0,
+    priceTo: 0,
+  };
+  constructor(private service: AllProductsService,
+              private notification: ToastrService,
+              private router: Router,) {
+  }
+
+  ngOnInit(): void {
+        this.loadStorage()
+    }
+
+
+  public loadStorage() {
+    this.service.getItems(this.searchParameters).subscribe({
+        next: res => {
+          this.products = res;
+        },
+        error: error => {
+
+        }
+      }
+    )
+  }
 }
