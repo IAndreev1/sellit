@@ -8,6 +8,7 @@ import {NgIf} from "@angular/common";
 import {BetDto} from "../../dtos/betDto";
 import {BetService} from "../../services/bet.service";
 import {FormsModule} from "@angular/forms";
+import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-single-product-view',
@@ -32,13 +33,15 @@ export class SingleProductViewComponent implements OnInit {
     product:null
   };
   userHasBet:boolean = false;
-
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
     private service: ProductService,
     private betService:BetService,
     private notification: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
+    private snackBar:  MatSnackBar
   ) {
   }
 
@@ -80,8 +83,11 @@ export class SingleProductViewComponent implements OnInit {
     this.bet.product = this.product;
     this.betService.createBet(this.bet).subscribe({
       next: () => {
-        this.notification.success(`Bet successfully created`, "Success");
-
+        this.snackBar.open('Bet successfully places', 'Close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration:3000
+        });
         this.router.navigate(['/products']);
 
       },
