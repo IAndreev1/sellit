@@ -34,11 +34,8 @@ export class AllProductsService {
       params = params.set('priceTo', searchParameters.priceTo);
     }
 
-    const headers = new HttpHeaders({
-      'Authorization': this.authService.getToken()
-    });
-    console.log(headers)
-    return this.http.get<ProductDto[]>(this.baseUri, {params,headers});
+
+    return this.http.get<ProductDto[]>(this.baseUri, {params});
   }
 
   /**
