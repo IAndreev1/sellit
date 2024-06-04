@@ -34,18 +34,34 @@
       <div *ngIf="activeSection === 'viewProducts'">
         <h3>My Products</h3>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-          <ng-container *ngFor="let product of products">
-            <div class="col" (click)="redirectToProduct(product.id)">
+          <ng-container *ngIf="products.length > 0; else noProducts">
+            <div class="col" *ngFor="let product of products" (click)="redirectToProduct(product.id)">
               <app-product-card [name]="product.name" [description]="product.description" [price]="product.price"
                                 [imageData]="product.imageData"></app-product-card>
             </div>
           </ng-container>
+          <ng-template #noProducts>
+            <div class="col">
+              <div class="alert alert-info" role="alert">
+                <p><strong>No products found!</strong> You haven't added any products yet.</p>
+              </div>
+            </div>
+          </ng-template>
         </div>
+
       </div>
       <div *ngIf="activeSection === 'myBets'">
         <h3>My Bets</h3>
-        <app-my-bet-card *ngFor="let bet of bets" [bet]="bet" (delete)="deleteBet($event)"></app-my-bet-card>
+        <ng-container *ngIf="bets.length > 0; else noBets">
+          <app-my-bet-card *ngFor="let bet of bets" [bet]="bet" (delete)="deleteBet($event)"></app-my-bet-card>
+        </ng-container>
+        <ng-template #noBets>
+          <div class="alert alert-info" role="alert">
+            <p><strong>No bets found!</strong> You haven't placed any bets yet.</p>
+          </div>
+        </ng-template>
       </div>
+
     </div>
   </div>
 </div>
