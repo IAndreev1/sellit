@@ -1,13 +1,15 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgClass, NgIf} from "@angular/common";
 import {BetDto} from "../../../dtos/betDto";
 
 @Component({
   selector: 'app-my-bet-card',
   standalone: true,
-    imports: [
-        DatePipe
-    ],
+  imports: [
+    DatePipe,
+    NgIf,
+    NgClass
+  ],
   templateUrl: './my-bet-card.component.html',
   styleUrl: './my-bet-card.component.scss'
 })

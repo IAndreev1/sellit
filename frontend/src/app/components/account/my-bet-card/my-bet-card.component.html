@@ -1,18 +1,24 @@
-<div class="card mb-2 shadow-sm w-100">
+<div class="card mb-2 shadow-sm w-100" [ngClass]="{'accepted': bet.accepted, 'rejected': bet.rejected}">
   <div class="card-body p-2 d-flex flex-column">
     <div class="d-flex justify-content-between mb-1">
-      <p class="card-amount mb-0" >Amount: ${{ bet.amount }}</p>
-      <p class="card-date mb-0" >Date: {{ bet.date | date:'shortDate' }}</p>
+      <p class="card-amount mb-0">Amount: ${{ bet.amount }}</p>
+      <p class="card-date mb-0">Date: {{ bet.date | date:'shortDate' }}</p>
     </div>
-    <h5 class="card-title mb-2" >{{ bet.description }}</h5>
-    <div class="mt-auto d-flex justify-content-end">
-      <button class="btn btn-success btn-sm me-1" >
-        Edit
-      </button>
-      <button class="btn btn-danger btn-sm"  (click)="onDelete()" >
-        Delete
-      </button>
+    <h5 class="card-title mb-2">{{ bet.description }}</h5>
+    <!-- Product information card -->
+    <div class="card mb-2">
+      <div class="card-body p-2">
+        <h6 class="card-subtitle mb-1 text-muted">{{ bet.product.name }}</h6>
+        <p class="card-text mb-1">{{ bet.product.description }}</p>
+        <p class="card-text mb-0">Price: ${{ bet.product.price }}</p>
+      </div>
     </div>
+
+    <div class="mt-auto d-flex justify-content-end" *ngIf="!bet.accepted && !bet.rejected">
+      <button class="btn btn-success btn-sm me-1">Edit</button>
+      <button class="btn btn-danger btn-sm" (click)="onDelete()">Delete</button>
+    </div>
+    <div *ngIf="bet.accepted" class="badge bg-success">Accepted</div>
+    <div *ngIf="bet.rejected" class="badge bg-danger">Rejected</div>
   </div>
 </div>
-
