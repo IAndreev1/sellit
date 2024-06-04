@@ -9,6 +9,7 @@ import {BetDto} from "../../dtos/betDto";
 import {BetService} from "../../services/bet.service";
 import {FormsModule} from "@angular/forms";
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-single-product-view',
@@ -35,14 +36,17 @@ export class SingleProductViewComponent implements OnInit {
   userHasBet:boolean = false;
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
+  myProd:boolean
   constructor(
     private service: ProductService,
     private betService:BetService,
     private notification: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar:  MatSnackBar
+    private snackBar:  MatSnackBar,
+    private authService:AuthService
   ) {
+    this.ngOnInit()
   }
 
 
@@ -55,10 +59,18 @@ export class SingleProductViewComponent implements OnInit {
         const prodId = params.id;
         this.service.getById(prodId).subscribe({
           next: res => {
+            this.authService.getActiveUser().subscribe({
+              next: active => {
+                this.product = res;
+                if(this.product.user.id == active.id){
+                 this.myProd = true;
+                }
+                console.log("prod")
+                this.decodeImage();
+              }
 
-            this.product = res;
-            console.log("prod")
-            this.decodeImage();
+            })
+
           },
           error: error => {
            // this.router.navigate(['/products'])
@@ -69,6 +81,9 @@ export class SingleProductViewComponent implements OnInit {
       //  this.router.navigate(['/products']);
       }
     });
+  }
+  loadPage(){
+
   }
 
   decodeImage(): void {

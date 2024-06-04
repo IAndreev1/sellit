@@ -14,11 +14,15 @@
         $</span></p>
     </div>
   </div>
-
-  <div class="row mt-5">
+  <ng-container *ngIf="myProd;" >
+    <div class="alert alert-info text-center" role="alert" style="margin: 10%">
+      <i class="fas fa-check-circle"></i> This product is added by you!
+    </div>
+  </ng-container>
+  <div class="row mt-5" *ngIf="!myProd">
     <div class="col-md-12">
       <h2 class="text-center mb-4 bet-header">Place a Bet</h2>
-      <ng-container *ngIf="userHasBet; else betForm">
+      <ng-container *ngIf=" !myProd && userHasBet; else betForm">
         <div class="alert alert-info text-center" role="alert">
           <i class="fas fa-check-circle"></i> You have already placed a bet for this product.
           <br>

@@ -35,6 +35,7 @@ export class AddProductComponent {
     name: '',
     description: '',
     price: 0,
+    user:null,
     imageData: null
   }
   form: NgForm;

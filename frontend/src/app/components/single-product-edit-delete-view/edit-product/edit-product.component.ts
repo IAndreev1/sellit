@@ -23,6 +23,7 @@ export class EditProductComponent implements OnInit {
     name: "",
     description: "",
     price: 0,
+    user:null,
     imageData: null
   };
   imagePreview: string | null = null; // Property for image preview
