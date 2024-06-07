@@ -5,6 +5,7 @@ import com.example.backend.Endpoints.dto.BetDto;
 import com.example.backend.Endpoints.dto.ProductDto;
 import com.example.backend.Entity.Bet;
 import com.example.backend.Exceptions.AuthorizationException;
+import com.example.backend.Exceptions.ValidationException;
 import com.example.backend.service.BetService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,7 @@ public class BetEndPoint {
 
     @Secured("ROLE_USER")
     @PostMapping
-    public BetDto create(@RequestBody BetDto betDto) {
+    public BetDto create(@RequestBody BetDto betDto) throws ValidationException {
         LOGGER.trace("create({})", betDto);
         Bet createdBet = betService.create(betDto);
         return betMapper.entityToBetDto(createdBet);

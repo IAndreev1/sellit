@@ -6,6 +6,7 @@ import com.example.backend.Endpoints.dto.ProductSearchDto;
 import com.example.backend.Entity.ApplicationUser;
 import com.example.backend.Entity.Product;
 import com.example.backend.Exceptions.AuthorizationException;
+import com.example.backend.Exceptions.ValidationException;
 import com.example.backend.security.AuthService;
 import com.example.backend.service.ProductService;
 import jakarta.annotation.security.PermitAll;
@@ -46,7 +47,7 @@ public class ProductEndpoint {
 
     @PermitAll
     @PostMapping
-    public ProductDto create(@RequestBody ProductDto productDto) {
+    public ProductDto create(@RequestBody ProductDto productDto) throws ValidationException {
         LOGGER.trace("create({})", productDto);
         Product createdProduct = service.create(productDto);
         return productMapper.entityToProductDto(createdProduct);

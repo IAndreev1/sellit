@@ -24,7 +24,7 @@ import {FormsModule, NgForm} from "@angular/forms";
   imports: [
     NavbarComponent,
     NgIf,
-    ImageCropperComponent, MatFormFieldModule, MatSelectModule, MatButtonModule
+    ImageCropperComponent, MatFormFieldModule, MatSelectModule, MatButtonModule, FormsModule
   ],
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss']
@@ -67,13 +67,13 @@ export class AddProductComponent {
 
       },
       error: (error) => {
-        this.snackBar.open('Error occurred while creating product', 'Close', {
+        this.snackBar.open('Error occurred while creating product ', 'Close', {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
           duration:3000,
-          panelClass: ['error-snackbar'] // Optional CSS class for custom styling
+          panelClass: ['error-snackbar']
         });
-        // Handle error
+
       }
     });
   }
