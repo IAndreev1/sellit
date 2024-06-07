@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormsModule, NgForm} from "@angular/forms";
+
 import {NavbarComponent} from "../navbar/navbar.component";
 import {ProductDto} from "../../dtos/productDto";
 import {Observable} from "rxjs";
@@ -16,12 +16,12 @@ import {
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule, NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
   imports: [
-    FormsModule,
     NavbarComponent,
     NgIf,
     ImageCropperComponent, MatFormFieldModule, MatSelectModule, MatButtonModule

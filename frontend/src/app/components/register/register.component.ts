@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import {FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
+import {
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators
+} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {UserDetail} from "../../dtos/auth-request";
@@ -22,7 +29,7 @@ import {NavbarComponent} from "../navbar/navbar.component";
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
-  registerForm: UntypedFormGroup;
+  registerForm: FormGroup;
   submitted = false;
   error = false;
   errorMessage = '';
