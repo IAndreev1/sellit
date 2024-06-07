@@ -57,14 +57,21 @@
                   <div *ngIf="submitted && registerForm.controls.email.errors" class="error">
                     <small class="text-danger">Email is required.</small>
                   </div>
+                  <div *ngIf="registerForm.controls.email.errors?.email" class="error">
+                    <small class="text-danger">Invalid email format.</small>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="password">Password <span style="color: red">*</span></label>
+                  <small class="form-text text-muted"> At least 8 characters long.</small>
                   <input type="password" name="password" formControlName="password" class="form-control" id="password"
                          placeholder="Password">
+
                   <div *ngIf="submitted && registerForm.controls.password.errors" class="error">
                     <small class="text-danger">Password is required.</small>
                   </div>
+
+
                   <label for="password2">Repeat password <span style="color: red">*</span></label>
                   <input type="password" name="password2" formControlName="password2" class="form-control" id="password2"
                          placeholder="Repeat password">
@@ -72,7 +79,8 @@
                     <small class="text-danger">Passwords must match.</small>
                   </div>
                 </div>
-                <button style="margin-top: 20px" type="submit" class="btn btn-success btn-block">Register</button>
+
+                <button [disabled]="!isFormValid()"  style="margin-top: 20px" type="submit" class="btn btn-success btn-block">Register</button>
               </form>
             </div>
             <div class="card-footer text-center bg-light">

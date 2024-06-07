@@ -1,10 +1,18 @@
 import { Component } from '@angular/core';
-import {FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
+import {
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators
+} from "@angular/forms";
 import {NavbarComponent} from "../navbar/navbar.component";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {AuthRequest} from "../../dtos/auth-request";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-login',
@@ -12,13 +20,14 @@ import {AuthRequest} from "../../dtos/auth-request";
   imports: [
     FormsModule,
     NavbarComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  loginForm: UntypedFormGroup;
+  loginForm: FormGroup;
 
   submitted = false;
 
@@ -28,13 +37,15 @@ export class LoginComponent {
 
   constructor(private formBuilder: UntypedFormBuilder, private authService: AuthService,  private router: Router, private notification:ToastrService) {
     this.loginForm = this.formBuilder.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
 
   }
 
-
+  isFormValid(): boolean {
+    return this.loginForm.valid;
+  }
 
 
   loginUser() {

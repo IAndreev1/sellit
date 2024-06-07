@@ -31,10 +31,14 @@ export class RegisterComponent {
     this.registerForm = this.formBuilder.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required,Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       password2 : ['', [Validators.required, Validators.minLength(8)]]
     });
+  }
+
+  isFormValid(): boolean {
+    return this.registerForm.valid;
   }
 
   registerUser() {
