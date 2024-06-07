@@ -11,16 +11,13 @@
         <a class="nav-link" *ngIf="!authService.isLoggedIn()" routerLink="/login" routerLinkActive="active">Login</a>
         <a class="nav-link" *ngIf="!authService.isLoggedIn()" routerLink="/register"
            routerLinkActive="active">Register</a>
-        <a class="nav-link" *ngIf="!authService.isLoggedIn()" routerLink="/products"
-           routerLinkActive="active">Products</a>
-        <a class="nav-link" *ngIf="!authService.isLoggedIn()" routerLink="/addNewProduct"
-           routerLinkActive="active">Add New</a>
+
       </ul>
       <ul class="navbar-nav ">
         <a class="nav-link" *ngIf="authService.isLoggedIn()" routerLink="/products"
            routerLinkActive="active">Products</a>
         <a class="nav-link" *ngIf="authService.isLoggedIn()" routerLink="/addNewProduct"
-           routerLinkActive="active">Add New</a>
+           routerLinkActive="active">Add Product</a>
         <a class="nav-link" *ngIf="authService.isLoggedIn()" routerLink="/account"
            routerLinkActive="active">Account <span class="bi bi-person-circle ml-2"></span></a>
         <a class="nav-link" *ngIf="authService.isLoggedIn()" routerLink="/" (click)="logoutUser()">Logout</a>
