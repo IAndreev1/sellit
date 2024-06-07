@@ -11,6 +11,7 @@ import com.example.backend.Exceptions.ValidationException;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.security.JwtTokenizer;
 import com.example.backend.service.UserService;
+import com.example.backend.service.impl.validators.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +37,13 @@ public class CustomUserDetailService implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    private final UserValidator userValidator;
     @Autowired
-    public CustomUserDetailService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenizer jwtTokenizer) {
+    public CustomUserDetailService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenizer jwtTokenizer, UserValidator userValidator) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenizer = jwtTokenizer;
-
-
+        this.userValidator = userValidator;
     }
 
 
@@ -86,6 +87,7 @@ public class CustomUserDetailService implements UserService {
 
     @Override
     public String register(UserDetailDto userDetailDto) throws ValidationException, ConflictException {
+        userValidator.validateForCreate(userDetailDto);
         LOGGER.trace("register({})", userDetailDto);
         ApplicationUser newUser = new ApplicationUser();
         newUser.setFirstName(userDetailDto.firstName());

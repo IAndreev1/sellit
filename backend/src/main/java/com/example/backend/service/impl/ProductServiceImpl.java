@@ -7,9 +7,11 @@ import com.example.backend.Entity.ApplicationUser;
 import com.example.backend.Entity.Product;
 import com.example.backend.Exceptions.AuthorizationException;
 import com.example.backend.Exceptions.NotFoundException;
+import com.example.backend.Exceptions.ValidationException;
 import com.example.backend.repository.ProductRepository;
 import com.example.backend.security.AuthService;
 import com.example.backend.service.ProductService;
+import com.example.backend.service.impl.validators.ProductValidator;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,15 +32,19 @@ public class ProductServiceImpl implements ProductService {
 
     private final AuthService authService;
 
-    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper, AuthService authService) {
+    private final ProductValidator productValidator;
+
+    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper, AuthService authService, ProductValidator productValidator) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.authService = authService;
+        this.productValidator = productValidator;
     }
 
     @Override
     @Transactional
-    public Product create(ProductDto productDto) {
+    public Product create(ProductDto productDto) throws ValidationException {
+        productValidator.validateForCreate(productDto);
         LOGGER.trace("create({})", productDto);
         ApplicationUser user = authService.getUserFromToken();
 

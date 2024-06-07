@@ -4,6 +4,7 @@ import com.example.backend.Endpoints.dto.BetDto;
 import com.example.backend.Endpoints.dto.ProductDto;
 import com.example.backend.Entity.Bet;
 import com.example.backend.Exceptions.AuthorizationException;
+import com.example.backend.Exceptions.ValidationException;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface BetService {
      * @param betDto The DTO containing information about the bet to be created.
      * @return The created bet entity.
      */
-    public Bet create(BetDto betDto);
+    public Bet create(BetDto betDto) throws ValidationException;
 
     /**
      * Updates an existing bet based on the provided DTO.

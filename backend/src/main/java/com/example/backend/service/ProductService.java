@@ -4,6 +4,7 @@ import com.example.backend.Endpoints.dto.ProductDto;
 import com.example.backend.Endpoints.dto.ProductSearchDto;
 import com.example.backend.Entity.Product;
 import com.example.backend.Exceptions.AuthorizationException;
+import com.example.backend.Exceptions.ValidationException;
 
 import java.util.List;
 /**
@@ -17,7 +18,7 @@ public interface ProductService {
      * @param productDto The product DTO containing information about the product to be created.
      * @return The created product.
      */
-    Product create(ProductDto productDto);
+    Product create(ProductDto productDto) throws ValidationException;
 
     /**
      * Updates an existing product based on the provided product DTO.

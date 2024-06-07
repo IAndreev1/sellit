@@ -4,15 +4,16 @@ import com.example.backend.Endpoints.Mappers.BetMapper;
 import com.example.backend.Endpoints.Mappers.ProductMapper;
 import com.example.backend.Endpoints.Mappers.UserMapper;
 import com.example.backend.Endpoints.dto.BetDto;
-import com.example.backend.Endpoints.dto.ProductDto;
 import com.example.backend.Entity.ApplicationUser;
 import com.example.backend.Entity.Bet;
 import com.example.backend.Entity.Product;
 import com.example.backend.Exceptions.AuthorizationException;
 import com.example.backend.Exceptions.NotFoundException;
+import com.example.backend.Exceptions.ValidationException;
 import com.example.backend.repository.BetRepository;
 import com.example.backend.security.AuthService;
 import com.example.backend.service.BetService;
+import com.example.backend.service.impl.validators.BetValidator;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -41,17 +41,21 @@ public class BetServiceImpl implements BetService {
 
     private final ProductMapper productMapper;
 
-    public BetServiceImpl(BetRepository betRepository, BetMapper betMapper, AuthService authService, UserMapper userMapper, ProductMapper productMapper) {
+    private final BetValidator betValidator;
+
+    public BetServiceImpl(BetRepository betRepository, BetMapper betMapper, AuthService authService, UserMapper userMapper, ProductMapper productMapper, BetValidator betValidator) {
         this.betRepository = betRepository;
         this.betMapper = betMapper;
         this.authService = authService;
         this.userMapper = userMapper;
         this.productMapper = productMapper;
+        this.betValidator = betValidator;
     }
 
     @Override
     @Transactional
-    public Bet create(BetDto betDto) {
+    public Bet create(BetDto betDto) throws ValidationException {
+        betValidator.validateForCreate(betDto);
         LOGGER.trace("create({})", betDto);
         ApplicationUser user = authService.getUserFromToken();
         Bet toCreate = betMapper.dtoToEntity(betDto);
