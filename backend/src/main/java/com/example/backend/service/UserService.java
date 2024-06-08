@@ -60,6 +60,6 @@ public interface UserService extends UserDetailsService {
      * @throws AuthorizationException if the current password is incorrect or the user is not authorized to change the password
      */
     boolean changePassword(ChangePasswordDto changePasswordDto) throws AuthorizationException;
-
+    
 
 }

@@ -20,3 +20,25 @@
 .btn-lg {
   margin: 10px /* Adjust button padding */
 }
+.bg-soft-success {
+  background-color: #d4edda; /* Soft green */
+  color: #155724;
+}
+
+.bg-soft-danger {
+  background-color: #f8d7da; /* Soft red */
+  color: #721c24;
+}
+
+.bg-soft-info {
+  background-color: #d1ecf1; /* Soft blue */
+  color: #0c5460;
+}
+
+.alert.text-center {
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 20px;
+  font-size: 1.1em;
+}
+

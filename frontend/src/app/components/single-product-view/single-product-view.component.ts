@@ -4,7 +4,7 @@ import {ProductDto} from "../../dtos/productDto";
 import {ProductService} from "../../services/product.service";
 import {ToastrService} from "ngx-toastr";
 import {ActivatedRoute, Router} from "@angular/router";
-import {NgIf} from "@angular/common";
+import {DatePipe, NgClass, NgIf} from "@angular/common";
 import {BetDto} from "../../dtos/betDto";
 import {BetService} from "../../services/bet.service";
 import {FormsModule} from "@angular/forms";
@@ -17,7 +17,9 @@ import {AuthService} from "../../services/auth.service";
   imports: [
     NavbarComponent,
     NgIf,
-    FormsModule
+    FormsModule,
+    DatePipe,
+    NgClass
   ],
   templateUrl: './single-product-view.component.html',
   styleUrl: './single-product-view.component.scss'
@@ -26,25 +28,28 @@ export class SingleProductViewComponent implements OnInit {
 
   product: ProductDto;
   decodedImage: string;
-  bet:BetDto = {
-    id:null,
-    description:'',
-    amount:0,
-    user:null,
-    product:null
+  bet: BetDto = {
+    id: null,
+    description: '',
+    amount: 0,
+    user: null,
+    product: null
   };
-  userHasBet:boolean = false;
+  userHasBet: boolean = false;
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
-  myProd:boolean
+  myProd: boolean
+  userHasBetForProduct: boolean
+  editingBet: boolean
+
   constructor(
     private service: ProductService,
-    private betService:BetService,
+    private betService: BetService,
     private notification: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar:  MatSnackBar,
-    private authService:AuthService
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) {
     this.ngOnInit()
   }
@@ -62,9 +67,21 @@ export class SingleProductViewComponent implements OnInit {
             this.authService.getActiveUser().subscribe({
               next: active => {
                 this.product = res;
-                if(this.product.user.id == active.id){
-                 this.myProd = true;
+                if (this.product.user.id == active.id) {
+                  this.myProd = true;
                 }
+                this.betService.getAllBetsOfUser().subscribe({
+                  next: userBets => {
+                    if (userBets) {
+                      const userBet = userBets.find(bet => bet.product.id === this.product.id);
+                      if (userBet) {
+                        this.userHasBetForProduct = true;
+                        this.bet = userBet;
+
+                      }
+                    }
+                  }
+                })
                 console.log("prod")
                 this.decodeImage();
               }
@@ -73,16 +90,17 @@ export class SingleProductViewComponent implements OnInit {
 
           },
           error: error => {
-           // this.router.navigate(['/products'])
+            // this.router.navigate(['/products'])
           }
         })
       },
       error: () => {
-      //  this.router.navigate(['/products']);
+        //  this.router.navigate(['/products']);
       }
     });
   }
-  loadPage(){
+
+  loadPage() {
 
   }
 
@@ -94,21 +112,35 @@ export class SingleProductViewComponent implements OnInit {
     }
   }
 
-  onSubmit(){
+  onSubmit() {
     this.bet.product = this.product;
     this.betService.createBet(this.bet).subscribe({
       next: () => {
-        this.snackBar.open('Bet successfully places', 'Close', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-          duration:3000
-        });
+        if (!this.editingBet) {
+          this.snackBar.open('Bet successfully placed', 'Close', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: 3000
+          });
+        } else {
+          this.snackBar.open('Bet successfully updated', 'Close', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: 3000
+          });
+        }
         this.router.navigate(['/products']);
-
       },
       error: (error) => {
-
+        // Handle error
       }
     });
+  }
+
+
+
+  editBet(){
+    this.userHasBetForProduct = false;
+    this.editingBet = true;
   }
 }

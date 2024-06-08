@@ -73,7 +73,6 @@ export class AddProductComponent {
           duration:3000,
           panelClass: ['error-snackbar']
         });
-
       }
     });
   }
