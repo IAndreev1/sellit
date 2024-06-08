@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {DatePipe, NgClass, NgIf} from "@angular/common";
 import {BetDto} from "../../../dtos/betDto";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-my-bet-card',
@@ -19,6 +20,11 @@ export class MyBetCardComponent {
   @Output() accept = new EventEmitter<BetDto>();
   @Output() delete = new EventEmitter<BetDto>();
 
+
+  constructor(
+    private router: Router,
+  ) {
+  }
   onAccept(): void {
     this.accept.emit(this.bet);
   }
@@ -26,6 +32,8 @@ export class MyBetCardComponent {
   onDelete(): void {
     this.delete.emit(this.bet);
   }
+
+
 
 
 }

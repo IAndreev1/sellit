@@ -140,5 +140,8 @@ export class AccountComponent implements OnInit {
     this.bets = this.bets.filter(b => b !== bet);
   }
 
+  redirectToBetProd(bet:BetDto) {
+    this.router.navigate([bet.product.id + '/product', ]);
+  }
 
 }
