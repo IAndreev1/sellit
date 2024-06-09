@@ -1,11 +1,14 @@
 package com.example.backend.UnitTests;
 
 import com.example.backend.Endpoints.Mappers.UserMapper;
+import com.example.backend.Endpoints.dto.ChangePasswordDto;
 import com.example.backend.Endpoints.dto.UserDetailDto;
 import com.example.backend.Endpoints.dto.UserDetailDtoBuilder;
 import com.example.backend.Endpoints.dto.UserLoginDto;
 import com.example.backend.Entity.ApplicationUser;
+import com.example.backend.Exceptions.AuthorizationException;
 import com.example.backend.Exceptions.ConflictException;
+import com.example.backend.Exceptions.NotFoundException;
 import com.example.backend.Exceptions.ValidationException;
 import com.example.backend.baseTest.TestDataGenerator;
 import com.example.backend.repository.UserRepository;
@@ -15,6 +18,7 @@ import com.example.backend.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -55,6 +59,7 @@ public class UserTests {
 
     @MockBean
     private AuthService authService;
+
 
     @BeforeEach
     public void cleanUp() throws ValidationException, ConflictException {
@@ -189,7 +194,89 @@ public class UserTests {
 
     }
 
+    @Test
+    @DisplayName("Find Application User By Email - User Exists")
+    void findApplicationUserByEmail_UserExists_ReturnsUser() throws ValidationException, ConflictException {
+        UserDetailDto expectedUser = UserDetailDtoBuilder.builder()
+                .firstName("Test")
+                .lastName("Tester")
+                .email("test.tester@example.com")
+                .password("password")
+                .build();
+
+        userService.register(expectedUser);
+
+        ApplicationUser actualUser = userService.findApplicationUserByEmail(expectedUser.email());
+
+        assertAll("Registered User",
+                () -> assertNotNull(actualUser, "Registered user should not be null"),
+                () -> assertEquals("Test", actualUser.getFirstName(), "First name should be 'Test'"),
+                () -> assertEquals("Tester", actualUser.getLastName(), "Last name should be 'Tester'"),
+                () -> assertEquals("test.tester@example.com", actualUser.getEmail(), "Email should be 'test.tester@example.com'"),
+                () -> assertTrue(passwordEncoder.matches("password", actualUser.getPassword()), "Password should match 'password'")
+
+        );
+    }
+
+    @Test
+    @DisplayName("Find Application User By Email - User Does Not Exist")
+    void findApplicationUserByEmail_UserDoesNotExist_ThrowsNotFoundException() {
+
+        String email = "nonexistent@example.com";
+
+        assertThrows(NotFoundException.class, () -> userService.findApplicationUserByEmail(email));
+    }
+
+    @Test
+    @DisplayName("Change Password - Successful Change")
+    void changePassword_SuccessfulChange() throws ValidationException, ConflictException, AuthorizationException, AuthorizationException {
+
+        String email = "test@example.com";
+        String oldPassword = "oldPassword";
+        String newPassword = "newPassword";
 
 
+        UserDetailDto userDetailDto = UserDetailDtoBuilder.builder()
+                .firstName("Test")
+                .lastName("Tester")
+                .email(email)
+                .password(oldPassword)
+                .build();
+        userService.register(userDetailDto);
+
+
+        ChangePasswordDto changePasswordDto = new ChangePasswordDto(email, oldPassword, newPassword);
+        boolean passwordChanged = userService.changePassword(changePasswordDto);
+
+
+        assertTrue(passwordChanged, "Password change should be successful");
+
+
+        UserLoginDto userLoginDto = new UserLoginDto(email, newPassword);
+        String authToken = userService.login(userLoginDto);
+        assertNotNull(authToken, "New password should be valid");
+    }
+
+    @Test
+    @DisplayName("Change Password - Incorrect Old Password")
+    void changePassword_IncorrectOldPassword_ThrowsAuthorizationException() throws ValidationException, ConflictException {
+
+        String email = "test@example.com";
+        String oldPassword = "oldPassword";
+        String newPassword = "newPassword";
+
+
+        UserDetailDto userDetailDto = UserDetailDtoBuilder.builder()
+                .firstName("Test")
+                .lastName("Tester")
+                .email(email)
+                .password(oldPassword)
+                .build();
+        userService.register(userDetailDto);
+
+
+        ChangePasswordDto changePasswordDto = new ChangePasswordDto(email, "wrongPassword", newPassword);
+        assertThrows(AuthorizationException.class, () -> userService.changePassword(changePasswordDto));
+    }
 
 }

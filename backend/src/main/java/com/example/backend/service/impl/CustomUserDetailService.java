@@ -126,10 +126,11 @@ public class CustomUserDetailService implements UserService {
         if (passwordEncoder.matches(changePasswordDto.oldPassword(), user.getPassword())) {
             user.setPassword(passwordEncoder.encode(changePasswordDto.newPassword()));
             userRepository.save(user);
+            return true;
         } else {
             throw new AuthorizationException("Old Password does not match", new LinkedList<>());
         }
-        return false;
+
     }
 
 
