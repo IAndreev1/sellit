@@ -4,6 +4,8 @@ import com.example.backend.Endpoints.Mappers.ProductMapper;
 import com.example.backend.Endpoints.Mappers.UserMapper;
 import com.example.backend.Endpoints.dto.ProductDto;
 import com.example.backend.Endpoints.dto.ProductDtoBuilder;
+import com.example.backend.Endpoints.dto.ProductSearchDto;
+import com.example.backend.Endpoints.dto.ProductSearchDtoBuilder;
 import com.example.backend.Endpoints.dto.UserDetailDto;
 import com.example.backend.Entity.ApplicationUser;
 import com.example.backend.Entity.Product;
@@ -23,6 +25,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.ActiveProfiles;
+
+import java.util.List;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -203,6 +207,70 @@ class ProductTests {
         assertNull(productService.getById(createdProduct.getId()));
 
 
+    }
+
+    @Test
+    @DisplayName("Deleting a product should fail if the user is not authorized")
+    void deleteProduct_shouldFailForUnauthorizedUser() {
+
+        applicationUser.setId(2L);
+        when(authService.getUserFromToken()).thenReturn(applicationUser);
+
+        Long productId = 1L;
+
+        assertThrows(AuthorizationException.class, () -> {
+            productService.delete(productId);
+        });
+    }
+
+    @Test
+    @DisplayName("Updating a product should fail if the user is not authorized")
+    void updateProduct_shouldFailForUnauthorizedUser() {
+        applicationUser.setId(2L);
+
+        when(authService.getUserFromToken()).thenReturn(applicationUser);
+
+        ProductDto productDto = new ProductDto(
+                1L,
+                "new Name",
+                "new Description",
+                20.0,
+                userDetailDto,
+                null
+        );
+
+        assertThrows(AuthorizationException.class, () -> {
+            productService.update(productDto);
+        });
+    }
+
+
+    @Test
+    @DisplayName("Searching for products should return matching ProductDto objects")
+    void searchProduct_shouldReturnTheProducts() throws ValidationException {
+        ProductDto productDto = ProductDtoBuilder.builder()
+                .name("testProduct")
+                .description("productDescription")
+                .price(10.0)
+                .user(userDetailDto)
+                .build();
+
+        productService.create(productDto);
+
+        ProductSearchDto searchParam = ProductSearchDtoBuilder.builder()
+                .name("testProduct")
+                .build();
+
+        List<ProductDto> result = productService.searchProducts(searchParam);
+
+        assertAll("Search Result",
+                () -> assertNotNull(result, "Result should not be null"),
+                () -> assertEquals(1, result.size(), "Expected one product in the result list"),
+                () -> {
+                    ProductDto resultProductDto = result.get(0);
+                    assertEquals(searchParam.name(), resultProductDto.name(), "Product name should match search criteria");
+                }
+        );
     }
 
 }
