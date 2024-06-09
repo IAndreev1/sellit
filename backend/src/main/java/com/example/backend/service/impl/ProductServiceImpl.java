@@ -52,6 +52,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = productMapper.dtoToEntity(productDto);
         product.setUser(user);
 
+
         return productRepository.save(product);
     }
 

@@ -23,7 +23,7 @@ public record BetDto(
         LocalDate date,
         boolean accepted,
         boolean rejected,
-        @NotNull(message = "User is required")
+
         UserDetailDto user,
         @NotNull(message = "Product is required")
         ProductDto product

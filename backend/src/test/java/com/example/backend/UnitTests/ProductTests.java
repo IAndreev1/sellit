@@ -141,21 +141,6 @@ class ProductTests {
     }
 
     @Test
-    @DisplayName("Creating a product should fail when user is null")
-    void createProduct_shouldFail_whenUserIsNull() {
-        ProductDto invalidProductDto = ProductDtoBuilder.builder()
-                .name("testProduct")
-                .description("productDescription")
-                .price(10.0)
-                .user(null)
-                .build();
-
-        assertThrows(ValidationException.class, () -> {
-            productService.create(invalidProductDto);
-        });
-    }
-
-    @Test
     @DisplayName("Updating a product should succeed with valid data")
     void updateProduct_shouldUpdateTheProductSuccessfully() throws AuthorizationException, ValidationException {
         ProductDto productDto = ProductDtoBuilder.builder()
