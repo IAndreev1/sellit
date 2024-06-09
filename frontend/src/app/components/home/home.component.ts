@@ -5,7 +5,8 @@ import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 import {ProductDto, ProductSearchDto} from "../../dtos/productDto";
 import {ProductCardComponent} from "../products/product-card/product-card.component";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-home',
@@ -13,14 +14,15 @@ import {NgForOf} from "@angular/common";
   imports: [
     NavbarComponent,
     ProductCardComponent,
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
 
-  products:ProductDto[]
+  products: ProductDto[]
 
   searchParameters: ProductSearchDto = {
     name: '',
@@ -28,14 +30,16 @@ export class HomeComponent implements OnInit{
     priceFrom: 0,
     priceTo: 0,
   };
+
   constructor(private service: AllProductsService,
               private notification: ToastrService,
-              private router: Router,) {
+              private router: Router,
+              public authService: AuthService) {
   }
 
   ngOnInit(): void {
-        this.loadStorage()
-    }
+    this.loadStorage()
+  }
 
 
   public loadStorage() {
@@ -48,5 +52,9 @@ export class HomeComponent implements OnInit{
         }
       }
     )
+  }
+
+  redirectToProduct(productId: string) {
+    this.router.navigate(['/' + productId + '/product']);
   }
 }

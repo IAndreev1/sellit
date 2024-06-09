@@ -44,28 +44,51 @@
   <div class="container">
     <h1>Welcome to the Sell It</h1>
     <p class="lead">Buy and sell amazing products easily</p>
-    <a href="/register" class="btn btn-primary btn-lg">Get Started</a>
+    <a  *ngIf="!authService.isLoggedIn" href="/register" class="btn btn-primary btn-lg">Get Started</a>
   </div>
 </div>
+
+
+
+
 
 <!-- Featured Products -->
 <div class="container mt-5">
   <h2 class="text-center mb-4">Featured Products</h2>
   <div class="row">
     <div class="col-md-4" *ngFor="let product of products.slice(0, 3)">
-      <app-product-card
-        [name]="product.name"
-        [description]="product.description"
-        [price]="product.price"
-        [imageData]="product.imageData">
-      </app-product-card>
+      <a (click)="redirectToProduct(product.id.toString())" class="text-decoration-none"
+         aria-label="Show item details">
+        <app-product-card [name]="product.name" [description]="product.description" [price]="product.price"
+                          [imageData]="product.imageData"></app-product-card>
+      </a>
     </div>
   </div>
 </div>
 
 <!-- How It Works -->
 <div class="container mt-5">
+  <h2 class="text-center mb-4">How It Works</h2>
+  <div class="row">
+    <div class="col-lg-4 text-center">
+      <i class="fas fa-tags fa-3x mb-3" style="color: #6c757d;"></i>
+      <h3 style="color: #343a40;">Sell Products</h3>
+      <p style="color: #6c757d;">Easily list your products for sale on our platform. Simply create an account, list your items, and start selling!</p>
+    </div>
+    <div class="col-lg-4 text-center">
+      <i class="fas fa-search fa-3x mb-3" style="color: #6c757d;"></i>
+      <h3 style="color: #343a40;">Find Products</h3>
+      <p style="color: #6c757d;">Browse through our extensive collection of products to find exactly what you're looking for. From electronics to clothing, we have it all!</p>
+    </div>
+    <div class="col-lg-4 text-center">
+      <i class="fas fa-gavel fa-3x mb-3" style="color: #6c757d;"></i>
+      <h3 style="color: #343a40;">Place Bets</h3>
+      <p style="color: #6c757d;">Placing bets on products you're interested in. Win exclusive deals by placing the highest bid!</p>
+    </div>
+  </div>
 </div>
+
+
 
 <!-- Footer -->
 <div class="footer">
