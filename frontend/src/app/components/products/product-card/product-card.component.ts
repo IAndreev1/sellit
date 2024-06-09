@@ -55,4 +55,8 @@ export class ProductCardComponent implements OnInit {
     }
     return color;
   }
+
+  truncateText(text: string, maxLength: number): string {
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  }
 }
