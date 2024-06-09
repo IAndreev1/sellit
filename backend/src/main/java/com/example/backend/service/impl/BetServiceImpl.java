@@ -121,6 +121,11 @@ public class BetServiceImpl implements BetService {
 
     }
 
+    @Override
+    public Bet getById(Long id) {
+        return betRepository.getBetById(id);
+    }
+
 
     private void acceptBet(Bet bet) throws AuthorizationException {
         Product product = bet.getProduct();

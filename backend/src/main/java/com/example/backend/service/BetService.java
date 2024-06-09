@@ -51,5 +51,13 @@ public interface BetService {
      */
     public List<BetDto> getAllBetsForUser();
 
+    /**
+     * Retrieves a bet with the specified ID.
+     *
+     * @param id The ID of the bet to retrieve.
+     * @return The BetDto object associated with the specified ID, or null if not found.
+     */
+    public Bet getById(Long id);
+
 
 }
