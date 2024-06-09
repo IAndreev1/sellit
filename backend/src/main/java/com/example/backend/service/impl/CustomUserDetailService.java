@@ -12,6 +12,7 @@ import com.example.backend.repository.UserRepository;
 import com.example.backend.security.JwtTokenizer;
 import com.example.backend.service.UserService;
 import com.example.backend.service.impl.validators.UserValidator;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,7 @@ public class CustomUserDetailService implements UserService {
 
 
     @Override
+    @Transactional
     public ApplicationUser getUser(String authToken) {
         LOGGER.trace("getUser({})", authToken);
         String email = jwtTokenizer.getEmailFromToken(authToken);
@@ -55,6 +57,7 @@ public class CustomUserDetailService implements UserService {
     }
 
     @Override
+    @Transactional
     public ApplicationUser findApplicationUserByEmail(String email) {
         LOGGER.debug("Find application user by email");
         LOGGER.trace("findApplicationUserByEmail({})", email);
@@ -66,6 +69,7 @@ public class CustomUserDetailService implements UserService {
     }
 
     @Override
+    @Transactional
     public String login(UserLoginDto userLoginDto) throws ValidationException, ConflictException {
         LOGGER.trace("login({})", userLoginDto);
 
@@ -86,6 +90,7 @@ public class CustomUserDetailService implements UserService {
     }
 
     @Override
+    @Transactional
     public String register(UserDetailDto userDetailDto) throws ValidationException, ConflictException {
         userValidator.validateForCreate(userDetailDto);
         LOGGER.trace("register({})", userDetailDto);
@@ -109,11 +114,13 @@ public class CustomUserDetailService implements UserService {
     }
 
     @Override
+    @Transactional
     public boolean changeUserName(String newUserName) {
         return false;
     }
 
     @Override
+    @Transactional
     public boolean changePassword(ChangePasswordDto changePasswordDto) throws AuthorizationException {
         ApplicationUser user = findApplicationUserByEmail(changePasswordDto.email());
         if (passwordEncoder.matches(changePasswordDto.oldPassword(), user.getPassword())) {
@@ -127,6 +134,7 @@ public class CustomUserDetailService implements UserService {
 
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         LOGGER.debug("Load all user by email");
         ApplicationUser applicationUser = userRepository.findUserByEmail(email);
