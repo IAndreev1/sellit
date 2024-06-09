@@ -41,7 +41,7 @@ public interface ProductService {
      * @param productSearchDto The product search DTO containing search criteria.
      * @return A list of product DTOs matching the search criteria.
      */
-    List<ProductDto> searchProducts(ProductSearchDto productSearchDto);
+    List<ProductDto> searchProducts(ProductSearchDto productSearchDto) throws ValidationException;
 
     /**
      * Retrieves products associated with the current user.

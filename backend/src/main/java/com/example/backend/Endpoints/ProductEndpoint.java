@@ -45,7 +45,7 @@ public class ProductEndpoint {
     }
 
 
-    @PermitAll
+    @Secured("ROLE_USER")
     @PostMapping
     public ProductDto create(@RequestBody ProductDto productDto) throws ValidationException {
         LOGGER.trace("create({})", productDto);
@@ -56,7 +56,7 @@ public class ProductEndpoint {
 
     @PermitAll
     @GetMapping
-    public List<ProductDto> searchProducts(ProductSearchDto searchParam) {
+    public List<ProductDto> searchProducts(ProductSearchDto searchParam) throws ValidationException {
         LOGGER.trace("searchProducts({})", searchParam);
 
         return service.searchProducts(searchParam);

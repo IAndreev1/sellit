@@ -1,6 +1,7 @@
 package com.example.backend.service.impl.validators;
 
 import com.example.backend.Endpoints.dto.ProductDto;
+import com.example.backend.Endpoints.dto.ProductSearchDto;
 import com.example.backend.Exceptions.ValidationException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
@@ -24,6 +25,13 @@ public class ProductValidator {
         Set<ConstraintViolation<ProductDto>> validationViolations = validator.validate(productDto);
         if (!validationViolations.isEmpty()) {
             throw new ValidationException("The product is not valid", validationViolations.stream().map(ConstraintViolation::getMessage).toList());
+        }
+    }
+
+    public void validateForSearch(ProductSearchDto searchParam) throws ValidationException {
+        Set<ConstraintViolation<ProductSearchDto>> validationViolations = validator.validate(searchParam);
+        if (!validationViolations.isEmpty()) {
+            throw new ValidationException("Search parameters are not valid", validationViolations.stream().map(ConstraintViolation::getMessage).toList());
         }
     }
 }

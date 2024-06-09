@@ -94,7 +94,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> searchProducts(ProductSearchDto searchParam) {
+    public List<ProductDto> searchProducts(ProductSearchDto searchParam) throws ValidationException {
+        productValidator.validateForSearch(searchParam);
         return productRepository.searchProducts(searchParam.name(), searchParam.description(), searchParam.priceFrom(), searchParam.priceTo())
                 .stream()
                 .map(productMapper::entityToProductDto)

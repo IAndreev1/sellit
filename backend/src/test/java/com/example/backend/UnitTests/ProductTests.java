@@ -244,7 +244,6 @@ class ProductTests {
         });
     }
 
-
     @Test
     @DisplayName("Searching for products should return matching ProductDto objects")
     void searchProduct_shouldReturnTheProducts() throws ValidationException {
@@ -272,5 +271,22 @@ class ProductTests {
                 }
         );
     }
+
+
+    @Test
+    @DisplayName("Searching for products with invalid parameters should throw ValidationException")
+    void searchProduct_shouldThrowValidationExceptionForInvalidParameters() {
+        ProductSearchDto searchParam = ProductSearchDtoBuilder.builder()
+                .name("testProduct")
+                .priceFrom(-10.0)
+                .priceTo(0.0)
+                .build();
+
+
+        assertThrows(ValidationException.class, () -> {
+            productService.searchProducts(searchParam);
+        });
+    }
+
 
 }
