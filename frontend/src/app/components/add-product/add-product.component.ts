@@ -91,4 +91,5 @@ export class AddProductComponent {
     }
   }
 
+  protected readonly Number = Number;
 }

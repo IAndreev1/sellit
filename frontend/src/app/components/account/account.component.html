@@ -52,9 +52,11 @@
       </div>
       <div *ngIf="activeSection === 'myBets'">
         <h3>My Bets</h3>
+        <ng-container *ngIf="bets.length > 0; else noBets">
         <app-my-bet-card *ngFor="let bet of bets" [bet]="bet" (delete)="deleteBet($event)" (click)="redirectToBetProd(bet)"
                          style="cursor: pointer;"></app-my-bet-card>
 
+        </ng-container>
         <ng-template #noBets>
           <div class="alert alert-info" role="alert">
             <p><strong>No bets found!</strong> You haven't placed any bets yet.</p>

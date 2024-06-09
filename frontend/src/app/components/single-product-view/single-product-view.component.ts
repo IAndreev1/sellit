@@ -129,7 +129,7 @@ export class SingleProductViewComponent implements OnInit {
             duration: 3000
           });
         }
-        this.router.navigate(['/products']);
+        this.ngOnInit()
       },
       error: (error) => {
         // Handle error

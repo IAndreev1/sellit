@@ -3,45 +3,39 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-8">
-      <div class="card shadow-lg border-0">
-        <div class="card-header bg-primary text-white">
-          <h4 class="mb-0">Add New Product</h4>
+      <div class="shadow-lg p-4 rounded" style="background-color: #f8f9fa;">
+        <h2 class="text-center mb-4">Add New Product</h2>
+        <div class="text-center mb-4">
+          <div class="image-placeholder">
+            <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview" class="img-thumbnail mb-2">
+            <img *ngIf="!imagePreview" src="../../../../assets/image_placeholder.jpg" alt="Placeholder Image" class="img-thumbnail mb-2" style="width: 500px;height: 350px;">
+
+            <input type="file" id="image" (change)="onFileSelected($event)" class="form-control-file">
+            <label *ngIf="!imagePreview" for="image" class="btn btn-primary mt-2">Choose Image</label>
+            <label *ngIf="imagePreview" for="image" class="btn btn-primary mt-2">Change Image</label>
+          </div>
         </div>
-        <div class="card-body">
-          <div class="form-group text-center mb-4">
-            <div class="image-placeholder">
-              <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview" class="img-thumbnail mb-2">
-              <img *ngIf="!imagePreview" src="https://via.placeholder.com/750x500" alt="Placeholder Image" class="img-thumbnail mb-2" >
-              <input type="file" id="image" (change)="onFileSelected($event)" class="form-control-file">
-              <label *ngIf="!imagePreview"  for="image" class="btn btn-primary mt-2">Choose Image</label>
-              <label *ngIf="imagePreview"  for="image" class="btn btn-primary mt-2">Change Image</label>
+        <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+          <div class="form-group">
+            <label for="productName">Product Name <span class="text-muted">(Max 100 characters)</span></label>
+            <input type="text" id="productName" class="form-control" name="name" [(ngModel)]="product.name" required maxlength="100" placeholder="Enter product name">
+          </div>
+          <div class="form-group">
+            <label for="productDescription">Description <span class="text-muted">(Max 500 characters)</span></label>
+            <textarea id="productDescription" class="form-control" name="description" [(ngModel)]="product.description" required maxlength="500" rows="4" placeholder="Enter product description"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="productPrice">Price </label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input type="number" id="productPrice" class="form-control" name="price" [(ngModel)]="product.price" required min="0.01" max="{{Number.MAX_VALUE}}" placeholder="Enter product price">
             </div>
           </div>
-          <form #form="ngForm" (ngSubmit)="onSubmit(form)">
-            <div class="form-group">
-              <label for="productName">Product Name <span class="text-muted">(Max 100 characters)</span></label>
-              <input type="text" id="productName" class="form-control" name="name" [(ngModel)]="product.name" required maxlength="100" placeholder="Enter product name">
-            </div>
-            <div class="form-group">
-              <label for="productDescription">Description <span class="text-muted">(Max 500 characters)</span></label>
-              <textarea id="productDescription" class="form-control" name="description" [(ngModel)]="product.description" required maxlength="500" rows="4" placeholder="Enter product description"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="productPrice">Price </label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">$</span>
-                </div>
-                <input type="number" id="productPrice" class="form-control" name="price" [(ngModel)]="product.price" required min="0.01" placeholder="Enter product price">
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block mt-4" [disabled]="!form.valid">Add Product</button>
-          </form>
-        </div>
+          <button type="submit" class="btn btn-primary btn-block mt-4" [disabled]="!form.valid">Add Product</button>
+        </form>
       </div>
     </div>
   </div>
 </div>
-
-
-
