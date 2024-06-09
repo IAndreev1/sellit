@@ -1,8 +1,9 @@
 package com.example.backend.Endpoints.dto;
 
+import io.soabase.recordbuilder.core.RecordBuilder;
 import lombok.Builder;
 
-@Builder
+@RecordBuilder
 public record ProductSearchDto(
         Long id,
         String name,

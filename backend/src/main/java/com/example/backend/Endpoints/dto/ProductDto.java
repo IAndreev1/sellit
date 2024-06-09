@@ -1,11 +1,12 @@
 package com.example.backend.Endpoints.dto;
 
+import io.soabase.recordbuilder.core.RecordBuilder;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
-@Builder
+@RecordBuilder
 public record ProductDto(
         Long id,
         @NotBlank(message = "Product name is required")
@@ -15,6 +16,7 @@ public record ProductDto(
         String description,
         @NotNull(message = "Product price is required")
         Double price,
+        @NotNull
         UserDetailDto user,
         byte[] imageData
 ) {
