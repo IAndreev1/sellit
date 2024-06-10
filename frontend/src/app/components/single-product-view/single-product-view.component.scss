@@ -42,3 +42,23 @@
   font-size: 1.1em;
 }
 
+/* Cool back button style */
+.btn-back {
+  background-color: #17a2b8; /* Teal background */
+  border-color: #17a2b8; /* Teal border */
+  color: #ffffff; /* White text */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px; /* Padding */
+  margin: 30px;
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer cursor */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+.btn-back:hover {
+  background-color: #138496; /* Darker teal background on hover */
+  border-color: #138496; /* Darker teal border on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+

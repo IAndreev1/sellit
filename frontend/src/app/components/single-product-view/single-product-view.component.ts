@@ -134,4 +134,7 @@ export class SingleProductViewComponent implements OnInit {
     this.userHasBetForProduct = false;
     this.editingBet = true;
   }
+  goBack(){
+    this.router.navigate(['/register'])
+  }
 }

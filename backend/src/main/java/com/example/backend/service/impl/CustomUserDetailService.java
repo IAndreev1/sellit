@@ -121,7 +121,10 @@ public class CustomUserDetailService implements UserService {
 
     @Override
     @Transactional
-    public boolean changePassword(ChangePasswordDto changePasswordDto) throws AuthorizationException {
+    public boolean changePassword(ChangePasswordDto changePasswordDto) throws AuthorizationException, ValidationException {
+        if(changePasswordDto.newPassword().length() < 8){
+            throw new ValidationException("Error changing password",new LinkedList<>());
+        }
         ApplicationUser user = findApplicationUserByEmail(changePasswordDto.email());
         if (passwordEncoder.matches(changePasswordDto.oldPassword(), user.getPassword())) {
             user.setPassword(passwordEncoder.encode(changePasswordDto.newPassword()));

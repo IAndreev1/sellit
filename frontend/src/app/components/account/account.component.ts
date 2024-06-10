@@ -12,6 +12,7 @@ import {BetService} from "../../services/bet.service";
 import {BetDto} from "../../dtos/betDto";
 import {AuthService} from "../../services/auth.service";
 import {ChangePasswordDto, UserDetail} from "../../dtos/auth-request";
+import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-account',
@@ -42,12 +43,15 @@ export class AccountComponent implements OnInit {
     newPassword:''
   };
   user: UserDetail
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   constructor(private service: AllProductsService,
               private notification: ToastrService,
               private router: Router,
               private betService: BetService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -80,13 +84,22 @@ export class AccountComponent implements OnInit {
     this.passwords.email = this.user.email;
     this.authService.changePassword(this.passwords).subscribe({
       next: res => {
-        console.log("Success")
+        this.snackBar.open('Password changed successfully', 'Close', {
+          duration: 3000,
+          panelClass: ['snack-bar-success'],
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       },
       error: error => {
-
+        this.snackBar.open('Error changing password', 'Close', {
+          duration: 3000,
+          panelClass: ['snack-bar-error'],
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       }
-    })
-
+    });
   }
 
   loadProducts() {

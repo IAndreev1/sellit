@@ -48,7 +48,7 @@ public class LoginEndpoint {
 
     @Secured("ROLE_USER")
     @PutMapping
-    public void changePassword(@RequestBody ChangePasswordDto changePasswordDto) throws AuthorizationException {
+    public void changePassword(@RequestBody ChangePasswordDto changePasswordDto) throws AuthorizationException, ValidationException {
         userService.changePassword(changePasswordDto);
     }
 
