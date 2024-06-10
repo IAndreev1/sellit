@@ -1,20 +1,16 @@
-<div class="card mb-2 shadow-sm w-100" [style.background-color]="bet.accepted ? '#7bed9f' : (bet.rejected ? '#f1948a' : 'white')">
-  <div class="card-body p-2 d-flex flex-column">
-    <div class="d-flex justify-content-between mb-1">
+<div class="card mb-3 shadow-sm w-100" [ngStyle]="{'background-color': bet.accepted ? '#7bed9f' : (bet.rejected ? '#f1948a' : 'white')}">
+  <div class="card-body p-3 d-flex flex-column">
+    <div class="d-flex justify-content-between align-items-center mb-2">
       <p class="card-amount mb-0" [class.font-weight-bold]="bet.accepted">Amount: ${{ bet.amount }}</p>
       <p class="card-date mb-0">Date: {{ bet.date | date:'shortDate' }}</p>
     </div>
-    <h5 class="card-title mb-2" >{{ bet.description }}</h5>
+    <h5 class="card-title mb-3">{{ bet.description }}</h5>
     <div class="mt-auto d-flex justify-content-end" *ngIf="!bet.accepted && !bet.rejected">
-      <button class="btn btn-success btn-sm me-1" (click)="onAccept()">
-        Accept
-      </button>
-      <button class="btn btn-danger btn-sm" (click)="onReject()">
-        Reject
-      </button>
+      <button class="btn btn-success me-2" (click)="onAccept()">Accept</button>
+      <button class="btn btn-danger" (click)="onReject()">Reject</button>
     </div>
     <div class="mt-auto d-flex justify-content-center align-items-center" *ngIf="bet.rejected || bet.accepted">
-      <p class="text-custom fs-3 font-weight-bold">{{ bet.rejected ? 'REJECTED' : 'ACCEPTED' }}</p>
+      <p class="text-custom fs-4 font-weight-bold">{{ bet.rejected ? 'REJECTED' : 'ACCEPTED' }}</p>
     </div>
   </div>
 </div>
