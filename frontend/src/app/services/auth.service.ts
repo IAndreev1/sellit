@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {AuthRequest, ChangePasswordDto, UserDetail} from '../dtos/auth-request';
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
@@ -13,6 +13,7 @@ export class AuthService {
 
   private authBaseUri: string = this.globals.backendUri + '/authentication';
 
+  logoutEvent: EventEmitter<void> = new EventEmitter<void>();
   user: UserDetail;
   private event: boolean = false;
 
@@ -66,6 +67,7 @@ export class AuthService {
   logoutUser() {
     console.log('Logout');
     localStorage.removeItem('authToken');
+    this.logoutEvent.emit();
   }
 
   getToken() {

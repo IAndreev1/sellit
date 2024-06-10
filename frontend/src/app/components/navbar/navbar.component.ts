@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {NgIf} from "@angular/common";
 
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -22,6 +23,7 @@ export class NavbarComponent {
 
   logoutUser() {
     this.authService.logoutUser();
-    window.location.reload();
+    this.router.navigate(['']);
+
   }
 }

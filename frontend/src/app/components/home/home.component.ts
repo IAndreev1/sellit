@@ -38,6 +38,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.logoutEvent.subscribe(() => {
+      // Reload the home page
+    this.userLoggedIn = this.authService.isLoggedIn()
+    });
+
     this.userLoggedIn = this.authService.isLoggedIn();
     this.loadStorage()
   }
