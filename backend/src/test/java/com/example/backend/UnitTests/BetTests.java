@@ -191,7 +191,7 @@ public class BetTests {
     @Test
     @DisplayName("Accepting a bet should accept the bet and reject all other bets for the same product")
     void acceptBet_shouldAcceptBet_AndRejectAllOtherBEtsForTheSameProduct() throws ValidationException, AuthorizationException {
-        ProductDto productDto = productMapper.entityToProductDto(productService.getById(5L));
+        ProductDto productDto = productMapper.entityToProductDto(productService.getById(6L));
         BetDto betDto1 = BetDtoBuilder.builder()
                 .amount(100.0)
                 .description("My new Bet")

@@ -4,6 +4,7 @@ import com.example.backend.Endpoints.Mappers.BetMapper;
 import com.example.backend.Endpoints.Mappers.ProductMapper;
 import com.example.backend.Endpoints.Mappers.UserMapper;
 import com.example.backend.Endpoints.dto.BetDto;
+import com.example.backend.Endpoints.dto.ProductDto;
 import com.example.backend.Entity.ApplicationUser;
 import com.example.backend.Entity.Bet;
 import com.example.backend.Entity.Product;
@@ -13,6 +14,7 @@ import com.example.backend.Exceptions.ValidationException;
 import com.example.backend.repository.BetRepository;
 import com.example.backend.security.AuthService;
 import com.example.backend.service.BetService;
+import com.example.backend.service.ProductService;
 import com.example.backend.service.impl.validators.BetValidator;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -43,13 +45,16 @@ public class BetServiceImpl implements BetService {
 
     private final BetValidator betValidator;
 
-    public BetServiceImpl(BetRepository betRepository, BetMapper betMapper, AuthService authService, UserMapper userMapper, ProductMapper productMapper, BetValidator betValidator) {
+    private final ProductService productService;
+
+    public BetServiceImpl(BetRepository betRepository, BetMapper betMapper, AuthService authService, UserMapper userMapper, ProductMapper productMapper, BetValidator betValidator, ProductService productService) {
         this.betRepository = betRepository;
         this.betMapper = betMapper;
         this.authService = authService;
         this.userMapper = userMapper;
         this.productMapper = productMapper;
         this.betValidator = betValidator;
+        this.productService = productService;
     }
 
     @Override
@@ -130,12 +135,25 @@ public class BetServiceImpl implements BetService {
     private void acceptBet(Bet bet) throws AuthorizationException {
         Product product = bet.getProduct();
         List<Bet> betsForTheSameProduct = betRepository.getBetsByProductId(product.getId());
-
+        markProductAsSold(product);
         for (Bet b : betsForTheSameProduct) {
             if (!Objects.equals(b.getId(), bet.getId())) {
                 update(new BetDto(b.getId(), b.getDescription(), b.getAmount(), b.getDate(), false, true, userMapper.entityToUserDetailDto(b.getUser()), productMapper.entityToProductDto(product)));
             }
         }
+    }
+
+    private void markProductAsSold(Product product) throws AuthorizationException {
+        ProductDto productDto = new ProductDto(
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                true,
+                userMapper.entityToUserDetailDto(product.getUser()),
+                product.getImageData()
+        );
+        productService.update(productDto);
     }
 
 

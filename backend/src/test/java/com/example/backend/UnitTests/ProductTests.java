@@ -147,6 +147,7 @@ class ProductTests {
                 .name("testProduct")
                 .description("productDescription")
                 .price(10.0)
+                .sold(false)
                 .user(userDetailDto)
                 .build();
 
@@ -157,6 +158,7 @@ class ProductTests {
                 "new Name",
                 "new Description",
                 createdProduct.getPrice() + 10.0,
+                false,
                 userDetailDto,
                 createdProduct.getImageData()
         );
@@ -183,6 +185,7 @@ class ProductTests {
                 .description("productDescription")
                 .price(10.0)
                 .user(userDetailDto)
+                .sold(false)
                 .build();
 
         Product createdProduct = productService.create(productDto);
@@ -220,6 +223,7 @@ class ProductTests {
                 "new Name",
                 "new Description",
                 20.0,
+                false,
                 userDetailDto,
                 null
         );

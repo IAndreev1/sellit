@@ -40,13 +40,13 @@ public class ProductGenerator {
 
 
 
-        generateProduct("Smartphone", "Experience innovation at your fingertips with our cutting-edge smartphone. Packed with advanced features and intuitive capabilities, this smartphone enhances every aspect of your digital life.", 800.0, 2L, "smartphone3.jpg");
+
         generateProduct("Headphones", "Immerse yourself in the ultimate listening experience with our elite headphones. Crafted for discerning audiophiles, these headphones deliver unparalleled sound quality and comfort for extended listening sessions.", 150.0, 3L, "headphones3.jpg");
         generateProduct("Tablet", "Unleash your imagination and productivity with our versatile tablet. Whether you're creating, consuming, or collaborating, this tablet empowers you to do more and express your creativity anywhere.", 500.0, 7L, "tablet3.jpg");
-
+        generateProduct("Smartphone", "Experience innovation at your fingertips with our cutting-edge smartphone. Packed with advanced features and intuitive capabilities, this smartphone enhances every aspect of your digital life.", 800.0, 2L, "smartphone3.jpg");
         generateProduct("Headphones", "Dive into an immersive audio experience with our premium headphones. From crisp highs to deep lows, these headphones deliver exceptional sound quality, allowing you to lose yourself in your favorite music and podcasts.", 150.0, 3L, "headphones1.jpg");
         generateProduct("Tablet", "Unleash your creativity and productivity with our versatile tablet. Whether you're sketching ideas, binge-watching your favorite shows, or managing your schedule, this tablet is your ultimate companion.", 500.0, 4L, "tablet1.jpg");
-        generateProduct("Smartwatch", "Elevate your fitness journey and stay connected in style with our sleek smartwatch. Track your workouts, receive real-time notifications, and express your personal style with customizable watch faces.", 300.0, 1L, "smartwatch1.jpg");
+        generateProduct("Smartwatch", "Elevate your fitness journey and stay connected in style with our sleek smartwatch. Track your workouts, receive real-time notifications, and express your personal style with customizable watch faces.", 300.0, 1L, "smartwatch1.jpg",true);
         generateProduct("Laptop", "Experience unparalleled performance and mobility with our cutting-edge laptop. Whether you're working on-the-go or indulging in immersive entertainment, this laptop delivers unparalleled power and versatility.", 1200.0, 1L, "laptop1.jpg");
         generateProduct("Smartphone", "Maximize your productivity and stay connected effortlessly with our feature-rich smartphone. Seamlessly switch between tasks, capture stunning photos, and stay organized on-the-go with this essential companion.", 800.0, 2L, "smartphone1.jpg");
 
@@ -75,6 +75,24 @@ public class ProductGenerator {
         product.setPrice(price);
         product.setUser(userRepository.getReferenceById(userId)); // Assuming user ID is provided
 
+        // Set photo for the product
+        try {
+            byte[] photoBytes = loadPhoto(photoName);
+            product.setImageData(photoBytes);
+        } catch (IOException e) {
+            LOGGER.error("Failed to load photo for product '{}'.", name, e);
+        }
+
+        productRepository.save(product);
+        LOGGER.debug("Product '{}' generated.", name);
+    }
+    private void generateProduct(String name, String description, double price, Long userId, String photoName,boolean sold) {
+        Product product = new Product();
+        product.setName(name);
+        product.setDescription(description);
+        product.setPrice(price);
+        product.setUser(userRepository.getReferenceById(userId)); // Assuming user ID is provided
+        product.setSold(sold);
         // Set photo for the product
         try {
             byte[] photoBytes = loadPhoto(photoName);

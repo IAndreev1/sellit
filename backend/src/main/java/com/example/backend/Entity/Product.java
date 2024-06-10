@@ -22,6 +22,8 @@ public class Product {
     private Long id;
     @Column
     private String name;
+    @Column
+    private boolean sold;
     @Column(columnDefinition = "TEXT")
     private String description;
     @Column
@@ -34,6 +36,10 @@ public class Product {
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<Bet> bets;
 
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
+    }
 
 
     public Long getId() {
@@ -82,5 +88,12 @@ public class Product {
 
     public void setUser(ApplicationUser user) {
         this.user = user;
+    }
+
+    public List<Bet> getBets() {
+        return bets;
+    }
+    public boolean getSold(){
+        return sold;
     }
 }

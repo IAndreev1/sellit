@@ -106,6 +106,7 @@ export class AccountComponent implements OnInit {
     this.service.getUserProducts().subscribe({
         next: res => {
           this.products = res;
+          console.log(" solddd" + this.products[1].sold)
         },
         error: error => {
 

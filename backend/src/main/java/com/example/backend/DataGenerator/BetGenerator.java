@@ -44,7 +44,7 @@ public class BetGenerator {
         Random random = new Random();
 
         for (Product product : products) {
-            int numberOfBets = random.nextInt(4) + 1;
+            int numberOfBets = random.nextInt(4) + 2;
 
             for (int i = 0; i < numberOfBets; i++) {
                 ApplicationUser user = users.get(random.nextInt(users.size()));
@@ -61,6 +61,10 @@ public class BetGenerator {
                     double betAmount = product.getPrice() + random.nextDouble() * product.getPrice();
                     betAmount = Math.round(betAmount * 100.0) / 100.0;
                     bet.setAmount(betAmount);
+                    if(product.getSold()){
+                        bet.setAccepted(true);
+                        i = numberOfBets;
+                    }
 
                     bet.setDate(LocalDate.now().minusDays(random.nextInt(30)));
 

@@ -37,7 +37,7 @@
           <ng-container *ngIf="products.length > 0; else noProducts">
             <div class="col" *ngFor="let product of products" (click)="redirectToProduct(product.id)">
               <app-product-card [name]="product.name" [description]="product.description" [price]="product.price"
-                                [imageData]="product.imageData"></app-product-card>
+                                [imageData]="product.imageData"  [sold]="product.sold"></app-product-card>
             </div>
           </ng-container>
           <ng-template #noProducts>

@@ -34,6 +34,7 @@ export class AddProductComponent {
     id: null,
     name: '',
     description: '',
+    sold:false,
     price: 0,
     user:null,
     imageData: null

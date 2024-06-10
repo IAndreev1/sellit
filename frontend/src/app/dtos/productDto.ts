@@ -5,6 +5,7 @@ export class ProductDto {
     public id: number,
     public name: string,
     public description: string,
+    public sold:boolean,
     public price: number,
     public user: UserDetail,
     public imageData: string,

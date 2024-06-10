@@ -22,6 +22,7 @@ export class EditProductComponent implements OnInit {
     id: 0,
     name: "",
     description: "",
+    sold:false,
     price: 0,
     user:null,
     imageData: null

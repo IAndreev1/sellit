@@ -17,6 +17,7 @@ export class ProductCardComponent implements OnInit {
   @Input() description: string;
   @Input() price: number;
   @Input() imageData: string;
+  @Input() sold: boolean;
   decodedImage: string | null = null;
 
 

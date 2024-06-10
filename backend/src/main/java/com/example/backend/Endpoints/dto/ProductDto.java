@@ -16,7 +16,7 @@ public record ProductDto(
         String description,
         @NotNull(message = "Product price is required")
         Double price,
-
+        boolean sold,
         UserDetailDto user,
         byte[] imageData
 ) {
