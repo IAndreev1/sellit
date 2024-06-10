@@ -6,8 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Online Marketplace</title>
   <style>
-
-
     .hero-section {
       background: url('https://media.istockphoto.com/id/1392898737/vector/abstract-horizontal-background-with-colorful-waves.jpg?s=612x612&w=0&k=20&c=xxRagBOWElqfzxPho893QoNmB1HnAw9VM-UHkQhtih4=') no-repeat center center;
       background-size: cover;
@@ -19,6 +17,10 @@
     .hero-section h1 {
       font-size: 3rem;
       margin-bottom: 20px;
+    }
+
+    .hero-section .btn {
+      margin: 5px;
     }
 
     .card img {
@@ -42,15 +44,13 @@
 <!-- Hero Section -->
 <div class="hero-section">
   <div class="container">
-    <h1>Welcome to the Sell It</h1>
+    <h1>Welcome to Sell It</h1>
     <p class="lead">Buy and sell amazing products easily</p>
-    <a  *ngIf="!authService.isLoggedIn" href="/register" class="btn btn-primary btn-lg">Get Started</a>
+    <a *ngIf="!authService.isLoggedIn" href="/register" class="btn btn-primary btn-lg">Get Started</a>
+    <a href="/addNewProduct" class="btn btn-success btn-lg">Start Selling</a>
+    <a href="/products" class="btn btn-warning btn-lg">Start Buying</a>
   </div>
 </div>
-
-
-
-
 
 <!-- Featured Products -->
 <div class="container mt-5">
@@ -88,8 +88,6 @@
   </div>
 </div>
 
-
-
 <!-- Footer -->
 <div class="footer">
   <div class="container">
@@ -102,4 +100,3 @@
 </body>
 
 </html>
-
