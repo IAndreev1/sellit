@@ -22,5 +22,6 @@ export class NavbarComponent {
 
   logoutUser() {
     this.authService.logoutUser();
+    window.location.reload();
   }
 }

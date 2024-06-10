@@ -23,7 +23,7 @@ import {AuthService} from "../../services/auth.service";
 export class HomeComponent implements OnInit {
 
   products: ProductDto[]
-
+  userLoggedIn:boolean
   searchParameters: ProductSearchDto = {
     name: '',
     description: '',
@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userLoggedIn = this.authService.isLoggedIn();
     this.loadStorage()
   }
 
@@ -56,5 +57,9 @@ export class HomeComponent implements OnInit {
 
   redirectToProduct(productId: string) {
     this.router.navigate(['/' + productId + '/product']);
+  }
+
+  redirectToRegister(){
+    this.router.navigate(['/register']);
   }
 }

@@ -1,0 +1,14 @@
+/* Add cool button style */
+.btn-cool {
+  background-color: white; /* Change the background color */
+  border-color: #ff6b6b; /* Change the border color */
+  color: #fd6a6b; /* Change the text color */
+  transition: all 0.3s ease; /* Add smooth transition */
+
+}
+
+.btn-cool:hover {
+  color: #ffffff;
+  background-color: #ff4d4d; /* Change the background color on hover */
+  border-color: #ff4d4d; /* Change the border color on hover */
+}

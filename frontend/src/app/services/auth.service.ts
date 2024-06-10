@@ -59,6 +59,7 @@ export class AuthService {
    * Check if a valid JWT token is saved in the localStorage
    */
   isLoggedIn() {
+    console.log(!!this.getToken() && (this.getTokenExpirationDate(this.getToken()).valueOf() > new Date().valueOf()))
     return !!this.getToken() && (this.getTokenExpirationDate(this.getToken()).valueOf() > new Date().valueOf());
   }
 

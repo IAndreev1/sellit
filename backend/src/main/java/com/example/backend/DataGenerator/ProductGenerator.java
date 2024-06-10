@@ -38,11 +38,11 @@ public class ProductGenerator {
     public void generateProducts() {
         LOGGER.debug("Generating Product Entities");
 
-        generateProduct("Laptop", "Experience unparalleled performance and mobility with our cutting-edge laptop. Whether you're working on-the-go or indulging in immersive entertainment, this laptop delivers unparalleled power and versatility.", 1200.0, 3L, "laptop1.jpg");
+        generateProduct("Laptop", "Experience unparalleled performance and mobility with our cutting-edge laptop. Whether you're working on-the-go or indulging in immersive entertainment, this laptop delivers unparalleled power and versatility.", 1200.0, 1L, "laptop1.jpg");
         generateProduct("Smartphone", "Maximize your productivity and stay connected effortlessly with our feature-rich smartphone. Seamlessly switch between tasks, capture stunning photos, and stay organized on-the-go with this essential companion.", 800.0, 2L, "smartphone1.jpg");
         generateProduct("Headphones", "Dive into an immersive audio experience with our premium headphones. From crisp highs to deep lows, these headphones deliver exceptional sound quality, allowing you to lose yourself in your favorite music and podcasts.", 150.0, 3L, "headphones1.jpg");
         generateProduct("Tablet", "Unleash your creativity and productivity with our versatile tablet. Whether you're sketching ideas, binge-watching your favorite shows, or managing your schedule, this tablet is your ultimate companion.", 500.0, 4L, "tablet1.jpg");
-        generateProduct("Smartwatch", "Elevate your fitness journey and stay connected in style with our sleek smartwatch. Track your workouts, receive real-time notifications, and express your personal style with customizable watch faces.", 300.0, 5L, "smartwatch1.jpg");
+        generateProduct("Smartwatch", "Elevate your fitness journey and stay connected in style with our sleek smartwatch. Track your workouts, receive real-time notifications, and express your personal style with customizable watch faces.", 300.0, 1L, "smartwatch1.jpg");
 
         generateProduct("Laptop", "Redefine the way you work and play with our advanced laptop. Experience lightning-fast performance, stunning visuals, and seamless multitasking, making every task effortless and enjoyable.", 1200.0, 6L, "laptop2.jpg");
         generateProduct("Smartphone", "Stay ahead of the curve with our next-generation smartphone. With innovative features and cutting-edge technology, this smartphone empowers you to do more, stay organized, and capture life's moments with clarity.", 800.0, 7L, "smartphone2.jpg");

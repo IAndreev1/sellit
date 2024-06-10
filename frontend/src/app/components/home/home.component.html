@@ -7,9 +7,9 @@
   <title>Online Marketplace</title>
   <style>
     .hero-section {
-      background: url('https://media.istockphoto.com/id/1392898737/vector/abstract-horizontal-background-with-colorful-waves.jpg?s=612x612&w=0&k=20&c=xxRagBOWElqfzxPho893QoNmB1HnAw9VM-UHkQhtih4=') no-repeat center center;
-      background-size: cover;
-      color: white;
+      background: url('./assets/sell_it_back.jpg')  center center no-repeat;
+      background-size: contain;
+      color: #000000;
       padding: 100px 0;
       text-align: center;
     }
@@ -46,26 +46,43 @@
   <div class="container">
     <h1>Welcome to Sell It</h1>
     <p class="lead">Buy and sell amazing products easily</p>
-    <a *ngIf="!authService.isLoggedIn" href="/register" class="btn btn-primary btn-lg">Get Started</a>
-    <a href="/addNewProduct" class="btn btn-success btn-lg">Start Selling</a>
-    <a href="/products" class="btn btn-warning btn-lg">Start Buying</a>
+    <a *ngIf="!userLoggedIn" href="/register" class="btn btn-primary btn-lg btn-cool">Get Started</a>
+
+    <a *ngIf="userLoggedIn" href="/addNewProduct" class="btn btn-success btn-lg">Start Selling</a>
+    <a *ngIf="userLoggedIn" href="/products" class="btn btn-warning btn-lg">Start Buying</a>
   </div>
 </div>
 
 <!-- Featured Products -->
-<div class="container mt-5">
-  <h2 class="text-center mb-4">Featured Products</h2>
-  <div class="row">
-    <div class="col-md-4" *ngFor="let product of products.slice(0, 3)">
-      <a (click)="redirectToProduct(product.id.toString())" class="text-decoration-none"
-         aria-label="Show item details">
-        <app-product-card [name]="product.name" [description]="product.description" [price]="product.price"
-                          [imageData]="product.imageData"></app-product-card>
-      </a>
+<ng-container *ngIf="userLoggedIn; else loggedIn">
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Featured Products</h2>
+    <div class="row">
+      <div class="col-md-4" *ngFor="let product of products?.slice(0, 3)">
+        <a (click)="redirectToProduct(product.id.toString())" class="text-decoration-none"
+           aria-label="Show item details">
+          <app-product-card [name]="product.name" [description]="product.description" [price]="product.price"
+                            [imageData]="product.imageData"></app-product-card>
+        </a>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
 
+<ng-template #loggedIn>
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Featured Products</h2>
+    <div class="row">
+      <div class="col-md-4" *ngFor="let product of products?.slice(0, 3)">
+        <a (click)="redirectToRegister()" class="text-decoration-none"
+           aria-label="Show item details">
+          <app-product-card [name]="product.name" [description]="product.description" [price]="product.price"
+                            [imageData]="product.imageData"></app-product-card>
+        </a>
+      </div>
+    </div>
+  </div>
+</ng-template>
 <!-- How It Works -->
 <div class="container mt-5">
   <h2 class="text-center mb-4">How It Works</h2>
@@ -73,17 +90,20 @@
     <div class="col-lg-4 text-center">
       <i class="fas fa-tags fa-3x mb-3" style="color: #6c757d;"></i>
       <h3 style="color: #343a40;">Sell Products</h3>
-      <p style="color: #6c757d;">Easily list your products for sale on our platform. Simply create an account, list your items, and start selling!</p>
+      <p style="color: #6c757d;">Easily list your products for sale on our platform. Simply create an account, list your
+        items, and start selling!</p>
     </div>
     <div class="col-lg-4 text-center">
       <i class="fas fa-search fa-3x mb-3" style="color: #6c757d;"></i>
       <h3 style="color: #343a40;">Find Products</h3>
-      <p style="color: #6c757d;">Browse through our extensive collection of products to find exactly what you're looking for. From electronics to clothing, we have it all!</p>
+      <p style="color: #6c757d;">Browse through our extensive collection of products to find exactly what you're looking
+        for. From electronics to clothing, we have it all!</p>
     </div>
     <div class="col-lg-4 text-center">
       <i class="fas fa-gavel fa-3x mb-3" style="color: #6c757d;"></i>
       <h3 style="color: #343a40;">Place Bets</h3>
-      <p style="color: #6c757d;">Placing bets on products you're interested in. Win exclusive deals by placing the highest bid!</p>
+      <p style="color: #6c757d;">Placing bets on products you're interested in. Win exclusive deals by placing the
+        highest bid!</p>
     </div>
   </div>
 </div>

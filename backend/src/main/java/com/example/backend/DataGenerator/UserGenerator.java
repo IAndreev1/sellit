@@ -33,6 +33,16 @@ public class UserGenerator {
     public void generateApplicationUsers() {
         LOGGER.debug("generating User Entities");
 
+        ApplicationUser testUser = new ApplicationUser();
+        testUser.setFirstName("User");
+        testUser.setLastName("1");
+        testUser.setEmail("user@email.com");
+        testUser.setPassword(passwordEncoder.encode("12345678"));
+
+        LOGGER.debug("saving test user: {}", testUser);
+        userRepository.save(testUser);
+
+
         String[] firstNames = {"John", "Jane", "Alice", "Bob", "Charlie", "David", "Eva", "Frank", "Grace", "Hank", "Ivy"};
         String[] lastNames = {"Doe", "Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor"};
         String[] emails = {"john.doe@example.com", "jane.smith@example.com", "alice.johnson@example.com", "bob.williams@example.com", "charlie.jones@example.com",
@@ -43,7 +53,7 @@ public class UserGenerator {
             user.setFirstName(firstNames[i]);
             user.setLastName(lastNames[i]);
             user.setEmail(emails[i]);
-            user.setPassword(passwordEncoder.encode("1234"));
+            user.setPassword(passwordEncoder.encode("12341234"));
 
             LOGGER.debug("saving user: {}", user);
             userRepository.save(user);

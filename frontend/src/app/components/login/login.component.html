@@ -1,65 +1,74 @@
 <app-navbar></app-navbar>
-<div class="container py-5">
-  <div class="row justify-content-center">
-    <div class="col-md-10">
-      <div class="text-center mb-4">
-        <h1 class="display-4">Sell It</h1>
-        <p class="lead">Welcome back! Please sign in to your account.</p>
-      </div>
-      <div class="card shadow-lg border-0 rounded-lg mt-5">
-        <div class="row no-gutters">
-          <div class="col-md-6 d-none d-md-block bg-light p-4">
-            <div class="h-100 d-flex align-items-center justify-content-center">
-              <div>
-                <h2 class="text-center mb-4">Why Sell It?</h2>
-                <ul class="list-unstyled">
-                  <li class="mb-3">
-                    <i class="fas fa-check-circle text-success mr-2"></i>
-                    <strong>Easy to Use</strong> - Simple interface for buying and selling.
-                  </li>
-                  <li class="mb-3">
-                    <i class="fas fa-check-circle text-success mr-2"></i>
-                    <strong>Wide Reach</strong> - Connect with buyers and sellers nationwide.
-                  </li>
-                  <li class="mb-3">
-                    <i class="fas fa-check-circle text-success mr-2"></i>
-                    <strong>24/7 Support</strong> - We're here to help, anytime.
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6  d-none d-md-block bg-light p-4 ">
-
-            <div class="card-body ">
-              <form class="form" [formGroup]="loginForm" (ngSubmit)="loginUser()">
-                <div class="form-group">
-                  <label for="inputUsername">Email</label>
-                  <input type="text" formControlName="username" class="form-control" id="inputUsername"
-                         placeholder="Enter email">
-                  <div *ngIf="submitted && loginForm.get('username').errors?.required" class="error">
-                    <small class="text-danger">Email is required.</small>
-                  </div>
+<div class="background-image">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="text-center mb-4">
+                    <h1 class="display-4">Sell It</h1>
+                    <p class="lead">Welcome back! Please sign in to your account.</p>
                 </div>
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <div class="row no-gutters">
+                        <div class="col-md-6 d-none d-md-block bg-light p-4">
+                            <div class="h-100 d-flex align-items-center justify-content-center">
+                                <div>
+                                    <h2 class="text-center mb-4">Why Sell It?</h2>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-3">
+                                            <i class="fas fa-check-circle text-success mr-2"></i>
+                                            <strong>Easy to Use</strong> - Simple interface for buying and selling.
+                                        </li>
+                                        <li class="mb-3">
+                                            <i class="fas fa-check-circle text-success mr-2"></i>
+                                            <strong>Wide Reach</strong> - Connect with buyers and sellers nationwide.
+                                        </li>
+                                        <li class="mb-3">
+                                            <i class="fas fa-check-circle text-success mr-2"></i>
+                                            <strong>24/7 Support</strong> - We're here to help, anytime.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6  d-none d-md-block bg-light p-4 ">
 
-                <div class="form-group">
-                  <label for="password">Password</label>
-                  <input type="password" formControlName="password" class="form-control" id="password"
-                         placeholder="Password">
-                  <div *ngIf="submitted && loginForm.get('password').errors?.required" class="error">
-                    <small class="text-danger">Password is required.</small>
-                  </div>
+                            <div class="card-body ">
+                                <form class="form" [formGroup]="loginForm" (ngSubmit)="loginUser()">
+                                    <div class="form-group">
+                                        <label for="inputUsername">Email</label>
+                                        <input type="text" formControlName="username" class="form-control"
+                                               id="inputUsername"
+                                               placeholder="Enter email">
+                                        <div *ngIf="submitted && loginForm.get('username').errors?.required"
+                                             class="error">
+                                            <small class="text-danger">Email is required.</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="password" formControlName="password" class="form-control"
+                                               id="password"
+                                               placeholder="Password">
+                                        <div *ngIf="submitted && loginForm.get('password').errors?.required"
+                                             class="error">
+                                            <small class="text-danger">Password is required.</small>
+                                        </div>
+                                    </div>
+
+                                    <button style="margin-top: 20px" type="submit" [disabled]="!isFormValid()"
+                                            class="btn btn-success btn-block">Login
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="card-footer text-center bg-light">
+                                Don't have an account? <a href="/register">Register here</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <button style="margin-top: 20px" type="submit" [disabled]="!isFormValid()" class="btn btn-success btn-block">Login</button>
-              </form>
             </div>
-            <div class="card-footer text-center bg-light">
-              Don't have an account? <a href="/register">Register here</a>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
+<div class="bottom-image"></div>
