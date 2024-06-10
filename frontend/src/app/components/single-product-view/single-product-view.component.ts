@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {NavbarComponent} from "../navbar/navbar.component";
-import {ProductDto} from "../../dtos/productDto";
-import {ProductService} from "../../services/product.service";
-import {ToastrService} from "ngx-toastr";
-import {ActivatedRoute, Router} from "@angular/router";
-import {DatePipe, NgClass, NgIf} from "@angular/common";
-import {BetDto} from "../../dtos/betDto";
-import {BetService} from "../../services/bet.service";
-import {FormsModule} from "@angular/forms";
-import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
-import {AuthService} from "../../services/auth.service";
+import { Component, OnInit } from '@angular/core';
+import { NavbarComponent } from "../navbar/navbar.component";
+import { ProductDto } from "../../dtos/productDto";
+import { ProductService } from "../../services/product.service";
+import { ToastrService } from "ngx-toastr";
+import { ActivatedRoute, Router } from "@angular/router";
+import { DatePipe, NgClass, NgIf } from "@angular/common";
+import { BetDto } from "../../dtos/betDto";
+import { BetService } from "../../services/bet.service";
+import { FormsModule } from "@angular/forms";
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from "@angular/material/snack-bar";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-single-product-view',
@@ -22,7 +22,7 @@ import {AuthService} from "../../services/auth.service";
     NgClass
   ],
   templateUrl: './single-product-view.component.html',
-  styleUrl: './single-product-view.component.scss'
+  styleUrls: ['./single-product-view.component.scss']
 })
 export class SingleProductViewComponent implements OnInit {
 
@@ -38,9 +38,9 @@ export class SingleProductViewComponent implements OnInit {
   userHasBet: boolean = false;
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
-  myProd: boolean
-  userHasBetForProduct: boolean
-  editingBet: boolean
+  myProd: boolean;
+  userHasBetForProduct: boolean;
+  editingBet: boolean;
 
   constructor(
     private service: ProductService,
@@ -50,17 +50,13 @@ export class SingleProductViewComponent implements OnInit {
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     private authService: AuthService
-  ) {
-    this.ngOnInit()
-  }
-
+  ) {}
 
   ngOnInit(): void {
-    console.log("onInit")
+    console.log("onInit");
     this.route.params.subscribe({
-
       next: params => {
-        console.log("param")
+        console.log("param");
         const prodId = params.id;
         this.service.getById(prodId).subscribe({
           next: res => {
@@ -77,31 +73,24 @@ export class SingleProductViewComponent implements OnInit {
                       if (userBet) {
                         this.userHasBetForProduct = true;
                         this.bet = userBet;
-
                       }
                     }
                   }
-                })
-                console.log("prod")
+                });
+                console.log("prod");
                 this.decodeImage();
               }
-
-            })
-
+            });
           },
           error: error => {
             // this.router.navigate(['/products'])
           }
-        })
+        });
       },
       error: () => {
         //  this.router.navigate(['/products']);
       }
     });
-  }
-
-  loadPage() {
-
   }
 
   decodeImage(): void {
@@ -113,23 +102,27 @@ export class SingleProductViewComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.bet.amount < this.product.price) {
+      this.snackBar.open('Bet amount cannot be smaller than the start price', 'Close', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration: 3000,
+        panelClass: ['snackbar-error']
+      });
+      return;
+    }
+
     this.bet.product = this.product;
     this.betService.createBet(this.bet).subscribe({
       next: () => {
-        if (!this.editingBet) {
-          this.snackBar.open('Bet successfully placed', 'Close', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-            duration: 3000
-          });
-        } else {
-          this.snackBar.open('Bet successfully updated', 'Close', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-            duration: 3000
-          });
-        }
-        this.ngOnInit()
+        const message = this.editingBet ? 'Bet successfully updated' : 'Bet successfully placed';
+        this.snackBar.open(message, 'Close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+        this.ngOnInit();
       },
       error: (error) => {
         // Handle error
@@ -137,9 +130,7 @@ export class SingleProductViewComponent implements OnInit {
     });
   }
 
-
-
-  editBet(){
+  editBet() {
     this.userHasBetForProduct = false;
     this.editingBet = true;
   }
