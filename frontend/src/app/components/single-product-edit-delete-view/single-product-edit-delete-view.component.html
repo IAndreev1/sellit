@@ -10,7 +10,7 @@
       <p class="lead product-description">{{product.description}}</p>
       <p class="font-weight-bold product-price">Price: ${{product.price}}</p>
       <div class="btn-group" role="group" aria-label="Product Actions">
-        <button class="btn btn-primary" [routerLink]="'edit'">Edit Product</button>
+        <button class="btn btn-primary" *ngIf="!product.sold" [routerLink]="'edit'">Edit Product</button>
         <button class="btn btn-danger" (click)="deleteProd()" >Delete Product</button>
       </div>
     </div>
