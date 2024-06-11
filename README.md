@@ -3,8 +3,7 @@
 
 Welcome to Sell It! This is a powerful and user-friendly platform where anyone can buy and sell items with ease. This project utilizes modern web technologies to ensure a smooth and efficient experience for all users.
 
-**Note**: This project is developed for training purposes to demonstrate my skills in web development and software engineering. It serves as a showcase of my capabilities in designing and implementing modern web applications using various technologies and best practices.
-
+**Note**: This is a training project to showcase my skills.
 
 ## Table of Contents 📚
 - [Features](#features)
@@ -40,7 +39,8 @@ Welcome to Sell It! This is a powerful and user-friendly platform where anyone c
 - **H2** 🗃️
 - **Maven** 🛠️
 - **RESTful Architecture** 🌐
-
+- **JUnit 5** 🧪
+- **Mockito** 🃏
 
 
 
@@ -100,12 +100,31 @@ Welcome to Sell It! This is a powerful and user-friendly platform where anyone c
 4. Place bets on products you are interested in 💰.
 5. Manage your profile and listings through the user dashboard, where you can find products listed by you and your bids 🛠️.
 
+## Quality Assurance and Testing 🧪
 
+Quality assurance is integral to ensuring the reliability and functionality of the Sell It application. Thorough testing has been conducted using JUnit 5 and Mockito across both the backend and frontend components.
+
+### Running Tests
+
+To execute the tests, follow these steps:
+
+1. **Navigate to the backend directory:**
+    ```bash
+    cd sellit/backend
+    ```
+
+2. **Run the tests:**
+    ```bash
+    mvn test
+    ```
+
+### Continuous Integration (CI)
+
+Continuous integration practices have been employed to automate the testing process. Whenever changes are made to the codebase, automated tests are executed to catch any potential issues early in the development cycle.
 
 ## License 📄
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contact 📧
-For any questions, feel free to contact us:
 - Email: [ivan.andreev.dev@gmail.com](mailto:ivan.andreev.dev@gmail.com)
 
