@@ -3,7 +3,7 @@
 
 Welcome to Sell It! This is a powerful and user-friendly platform where anyone can buy and sell items with ease. This project utilizes modern web technologies to ensure a smooth and efficient experience for all users.
 
-**Note**: This is a training project to showcase my skills.
+**Note**: This project is developed for training purposes to demonstrate my skills in web development and software engineering. It serves as a showcase of my capabilities in designing and implementing modern web applications using various technologies and best practices.
 
 ## Table of Contents 📚
 - [Features](#features)
