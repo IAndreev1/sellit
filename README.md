@@ -11,7 +11,6 @@ Welcome to Sell It! This is a powerful and user-friendly platform where anyone c
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
 
