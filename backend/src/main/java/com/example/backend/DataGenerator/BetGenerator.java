@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
-@Profile({"generateData", "test"})
+
 @Component("BetGenerator")
 @DependsOn({"CleanDatabase", "UserGenerator", "ProductGenerator"})
 public class BetGenerator {
@@ -42,8 +42,11 @@ public class BetGenerator {
         List<Product> products = productRepository.findAll();
         List<ApplicationUser> users = userRepository.findAll();
         Random random = new Random();
-
+        int reject = 0;
         for (Product product : products) {
+            if(reject == 1){
+                reject++;
+            }
             int numberOfBets = random.nextInt(4) + 2;
 
             for (int i = 0; i < numberOfBets; i++) {
@@ -64,6 +67,14 @@ public class BetGenerator {
                     if(product.getSold()){
                         bet.setAccepted(true);
                         i = numberOfBets;
+                    }
+                    if(user.getEmail().equals("user@email.com") && reject ==0){
+                        bet.setRejected(true);
+                        reject = 1;
+                    }
+                    if(user.getEmail().equals("user@email.com") && reject ==2){
+                        bet.setAccepted(true);
+                        reject = 3;
                     }
 
                     bet.setDate(LocalDate.now().minusDays(random.nextInt(30)));

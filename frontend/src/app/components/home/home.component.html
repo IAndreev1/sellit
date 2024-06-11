@@ -35,23 +35,28 @@
       text-align: center;
     }
   </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap">
 </head>
 
 <body>
 
 <app-navbar/>
 
-<!-- Hero Section -->
-<div class="hero-section">
-  <div class="container">
-    <h1>Welcome to Sell It</h1>
-    <p class="lead">Buy and sell amazing products easily</p>
-    <a *ngIf="!userLoggedIn" href="/register" class="btn btn-primary btn-lg btn-cool">Get Started</a>
 
-    <a *ngIf="userLoggedIn" href="/addNewProduct" class="btn btn-success btn-lg btn-green">Start Selling</a>
-    <a *ngIf="userLoggedIn" href="/products" class="btn btn-warning btn-lg btn-orange">Start Buying</a>
-  </div>
+<!-- Hero Section -->
+
+<div class="hero-section" >
+    <div class="container">
+        <h1>Welcome to Sell It</h1>
+        <p class="lead">Buy and sell amazing products easily</p>
+        <a *ngIf="!userLoggedIn" href="/register" class="btn btn-primary btn-lg btn-cool">Get Started</a>
+
+        <a *ngIf="userLoggedIn" href="/addNewProduct" class="btn btn-success btn-lg btn-green">Start Selling</a>
+        <a *ngIf="userLoggedIn" href="/products" class="btn btn-warning btn-lg btn-orange">Start Buying</a>
+    </div>
 </div>
+
+
 
 <!-- Featured Products -->
 <ng-container *ngIf="userLoggedIn; else loggedIn">

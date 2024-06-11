@@ -18,7 +18,7 @@ import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
 import java.util.Random;
 
-@Profile({"generateData", "test"})
+
 @Component("ProductGenerator")
 @DependsOn({"CleanDatabase","UserGenerator"})
 public class ProductGenerator {

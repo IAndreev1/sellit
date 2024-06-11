@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.lang.invoke.MethodHandles;
 import java.util.Random;
 
-@Profile({"generateData", "test"})
+
 @Component("UserGenerator")
 @DependsOn({"CleanDatabase"})
 public class UserGenerator {
